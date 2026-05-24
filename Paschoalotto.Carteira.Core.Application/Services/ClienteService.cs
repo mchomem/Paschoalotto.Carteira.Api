@@ -14,6 +14,7 @@ public class ClienteService : IClienteService
     private readonly IContratoRepository _contratoRepository;
     private readonly IParcelaRepository _parcelaRepository;
     private readonly IAcordoRepository _acordoRepository;
+    private readonly IParcelaAcordoRepository _parcelaAcordoRepository;
     private readonly IBoletoRepository _boletoRepository;
 
     public ClienteService(
@@ -21,12 +22,14 @@ public class ClienteService : IClienteService
         IContratoRepository contratoRepository,
         IParcelaRepository parcelaRepository,
         IAcordoRepository acordoRepository,
+        IParcelaAcordoRepository parcelaAcordoRepository,
         IBoletoRepository boletoRepository)
     {
         _clienteRepository = clienteRepository;
         _contratoRepository = contratoRepository;
         _parcelaRepository = parcelaRepository;
         _acordoRepository = acordoRepository;
+        _parcelaAcordoRepository = parcelaAcordoRepository;
         _boletoRepository = boletoRepository;
     }
 
@@ -89,22 +92,39 @@ public class ClienteService : IClienteService
 
         var contratos = await _contratoRepository.GetByClienteIdAsync(cliente.Id);
         var contratosDashboard = new List<ContratoDashboardDto>();
+        
+        // Listas consolidadas para o dashboard
+        var todasParcelas = new List<Parcela>();
+        var todosAcordos = new List<Acordo>();
+        var todasParcelasAcordo = new List<ParcelaAcordo>();
+        var todosBoletos = new List<Boleto>();
 
         foreach (var contrato in contratos)
         {
             // Buscar parcelas em aberto do contrato
             var parcelasEmAberto = await _parcelaRepository.GetParcelasAbertasByContratoIdAsync(contrato.Id);
+            todasParcelas.AddRange(parcelasEmAberto);
 
             // Buscar acordo ativo
             var acordoAtivo = await _acordoRepository.GetAcordoAtivoByContratoIdAsync(contrato.Id);
-
-            // Buscar boletos pendentes do acordo
-            var boletosPendentes = new List<Boleto>();
             if (acordoAtivo != null)
             {
-                var todosBoletosAcordo = await _boletoRepository.GetByAcordoIdAsync(acordoAtivo.Id);
-                boletosPendentes = todosBoletosAcordo.Where(b => b.Status == StatusBoleto.Pendente).ToList();
+                todosAcordos.Add(acordoAtivo);
+                
+                // Buscar parcelas do acordo
+                var parcelasAcordo = await _parcelaAcordoRepository.GetByAcordoIdAsync(acordoAtivo.Id);
+                todasParcelasAcordo.AddRange(parcelasAcordo);
+                
+                // Buscar boletos do acordo
+                var boletosAcordo = await _boletoRepository.GetByAcordoIdAsync(acordoAtivo.Id);
+                todosBoletos.AddRange(boletosAcordo);
             }
+
+            // Buscar boletos pendentes do acordo para o contrato específico
+            var boletosPendentes = acordoAtivo != null 
+                ? (await _boletoRepository.GetByAcordoIdAsync(acordoAtivo.Id))
+                    .Where(b => b.Status == StatusBoleto.Pendente).ToList()
+                : new List<Boleto>();
 
             contratosDashboard.Add(new ContratoDashboardDto
             {
@@ -115,10 +135,29 @@ public class ClienteService : IClienteService
             });
         }
 
+        // Calcular totalizadores
+        var totalDivida = contratos.Sum(c => c.SaldoDevedor);
+        var totalParcelas = todasParcelas.Count;
+        var parcelasVencidas = todasParcelas.Count(p => p.Status == StatusParcela.Vencida);
+        var proximoVencimento = todasParcelas
+            .Where(p => p.Status == StatusParcela.Aberta)
+            .OrderBy(p => p.DataVencimento)
+            .Select(p => (DateTime?)p.DataVencimento)
+            .FirstOrDefault();
+
         return new ClienteDashboardDto
         {
             Cliente = MapToResponseDto(cliente),
-            Contratos = contratosDashboard
+            Contratos = contratosDashboard,
+            Parcelas = todasParcelas.Select(MapParcelaToResponseDto).ToList(),
+            Acordos = todosAcordos.Select(a => MapAcordoToResponseDto(a, 
+                contratos.First(c => c.Id == a.ContratoId), cliente)).ToList(),
+            ParcelasAcordo = todasParcelasAcordo.Select(MapParcelaAcordoToResponseDto).ToList(),
+            Boletos = todosBoletos.Select(MapBoletoToResponseDto).ToList(),
+            TotalDivida = totalDivida,
+            TotalParcelas = totalParcelas,
+            ParcelasVencidas = parcelasVencidas,
+            ProximoVencimento = proximoVencimento
         };
     }
 
@@ -245,6 +284,24 @@ public class ClienteService : IClienteService
             Status = boleto.Status,
             StatusDescricao = boleto.Status.ToString(),
             DataEmissao = boleto.DataEmissao
+        };
+    }
+
+    private Core.Application.DTOs.ParcelaAcordo.ParcelaAcordoResponseDto MapParcelaAcordoToResponseDto(ParcelaAcordo parcela)
+    {
+        return new Core.Application.DTOs.ParcelaAcordo.ParcelaAcordoResponseDto
+        {
+            Id = parcela.Id,
+            AcordoId = parcela.AcordoId,
+            NumeroParcela = parcela.NumeroParcela,
+            Valor = parcela.Valor,
+            DataVencimento = parcela.DataVencimento,
+            DataPagamento = parcela.DataPagamento,
+            ValorPago = parcela.ValorPago,
+            Status = parcela.Status,
+            StatusDescricao = parcela.Status.ToString(),
+            TemBoleto = parcela.Boleto != null,
+            BoletoId = parcela.Boleto?.Id
         };
     }
 }

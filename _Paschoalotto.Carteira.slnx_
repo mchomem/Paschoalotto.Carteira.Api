@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Paschoalotto.Carteira.Api/Paschoalotto.Carteira.Api.csproj" />
+  <Project Path="Paschoalotto.Carteira.Core.Application/Paschoalotto.Carteira.Core.Application.csproj" />
+  <Project Path="Paschoalotto.Carteira.Core.Domain/Paschoalotto.Carteira.Core.Domain.csproj" />
+  <Project Path="Paschoalotto.Carteira.Infrastructure.IoC/Paschoalotto.Carteira.Infrastructure.IoC.csproj" />
+  <Project Path="Paschoalotto.Carteira.Infrastructure.Persistence/Paschoalotto.Carteira.Infrastructure.Persistence.csproj" />
+</Solution>

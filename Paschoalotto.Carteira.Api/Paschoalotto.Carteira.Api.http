@@ -1,0 +1,6 @@
+@Paschoalotto.Carteira.Api_HostAddress = http://localhost:5182
+
+GET {{Paschoalotto.Carteira.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -8,6 +8,7 @@ using Paschoalotto.Carteira.Core.Domain.Interfaces;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using SkiaSharp;
 
 namespace Paschoalotto.Carteira.Core.Application.Services;
 
@@ -235,7 +236,10 @@ public class BoletoService : IBoletoService
                         col.Item().Text($"- Acordo referente ao contrato {contrato.NumeroContrato}");
 
                         col.Item().PaddingTop(20).BorderBottom(1).PaddingBottom(10).Text("CÓDIGO DE BARRAS").SemiBold();
-                        col.Item().Text(boleto.CodigoBarras).FontFamily("Courier New").FontSize(8);
+
+                        // Gerar imagem do código de barras
+                        var codigoBarrasImagem = GerarImagemCodigoBarras(boleto.CodigoBarras);
+                        col.Item().Image(codigoBarrasImagem).FitWidth();
 
                         col.Item().PaddingTop(10).Text("LINHA DIGITÁVEL").SemiBold();
                         col.Item().Text(boleto.LinhaDigitavel).FontFamily("Courier New").FontSize(9);
@@ -252,6 +256,142 @@ public class BoletoService : IBoletoService
         });
 
         return document.GeneratePdf();
+    }
+
+    private byte[] GerarImagemCodigoBarras(string codigoBarras)
+    {
+        try
+        {
+            // Validar que temos 44 dígitos (padrão FEBRABAN)
+            if (codigoBarras.Length != 44 || !codigoBarras.All(char.IsDigit))
+            {
+                return GerarImagemFallback(codigoBarras);
+            }
+
+            // Codificar usando ITF-14 (Intercalado 2 de 5)
+            var encodedBars = EncodeITF(codigoBarras);
+
+            // Dimensões da imagem
+            const float moduleWidth = 1.0f; // Largura do módulo mais fino
+            const int barcodeHeight = 20; // Reduzido para 1/3 (de 60 para 20)
+            const int margin = 10;
+            const int textHeight = 25;
+
+            var totalWidth = (int)((encodedBars.Length * moduleWidth) + (2 * margin));
+            var totalHeight = barcodeHeight + textHeight + (2 * margin);
+
+            using var bitmap = new SKBitmap(totalWidth, totalHeight);
+            using var canvas = new SKCanvas(bitmap);
+            canvas.Clear(SKColors.White);
+
+            using var blackPaint = new SKPaint
+            {
+                Color = SKColors.Black,
+                Style = SKPaintStyle.Fill,
+                IsAntialias = false
+            };
+
+            using var textPaint = new SKPaint
+            {
+                Color = SKColors.Black,
+                TextSize = 10,
+                IsAntialias = true,
+                TextAlign = SKTextAlign.Center,
+                Typeface = SKTypeface.FromFamilyName("Courier New", SKFontStyle.Normal)
+            };
+
+            // Desenhar as barras
+            float x = margin;
+            for (int i = 0; i < encodedBars.Length; i++)
+            {
+                if (encodedBars[i] == '1') // Barra preta
+                {
+                    var rect = new SKRect(x, margin, x + moduleWidth, margin + barcodeHeight);
+                    canvas.DrawRect(rect, blackPaint);
+                }
+                x += moduleWidth;
+            }
+
+            // Desenhar o código de barras como texto abaixo
+            canvas.DrawText(codigoBarras, totalWidth / 2, totalHeight - 8, textPaint);
+
+            using var image = SKImage.FromBitmap(bitmap);
+            using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+            return data.ToArray();
+        }
+        catch
+        {
+            return GerarImagemFallback(codigoBarras);
+        }
+    }
+
+    private string EncodeITF(string data)
+    {
+        // Tabela de codificação ITF (Intercalado 2 de 5)
+        // Cada dígito é representado por 5 barras (2 largas, 3 estreitas)
+        var encodingTable = new Dictionary<char, string>
+        {
+            {'0', "00110"}, // NNWWN
+            {'1', "10001"}, // WNNNW
+            {'2', "01001"}, // NWNNW
+            {'3', "11000"}, // WWNNN
+            {'4', "00101"}, // NNWNW
+            {'5', "10100"}, // WNWNN
+            {'6', "01100"}, // NWWNN
+            {'7', "00011"}, // NNNWW
+            {'8', "10010"}, // WNNWN
+            {'9', "01010"}  // NWNWN
+        };
+
+        var result = new System.Text.StringBuilder();
+
+        // Start pattern: 0000 (4 narrow bars)
+        result.Append("0000");
+
+        // Processar pares de dígitos (intercalado)
+        for (int i = 0; i < data.Length; i += 2)
+        {
+            var digit1 = encodingTable[data[i]];
+            var digit2 = encodingTable[data[i + 1]];
+
+            // Intercalar os dígitos (barras do primeiro, espaços do segundo)
+            for (int j = 0; j < 5; j++)
+            {
+                // Barra do primeiro dígito
+                result.Append(digit1[j] == '1' ? "11" : "1");
+
+                // Espaço do segundo dígito
+                result.Append(digit2[j] == '1' ? "00" : "0");
+            }
+        }
+
+        // Stop pattern: 100 (wide bar, narrow space, narrow bar)
+        result.Append("1100");
+
+        return result.ToString();
+    }
+
+    private byte[] GerarImagemFallback(string codigoBarras)
+    {
+        using var bitmap = new SKBitmap(600, 85);
+        using var canvas = new SKCanvas(bitmap);
+        canvas.Clear(SKColors.White);
+
+        using var paint = new SKPaint
+        {
+            Color = SKColors.Black,
+            TextSize = 11,
+            IsAntialias = true,
+            TextAlign = SKTextAlign.Center,
+            Typeface = SKTypeface.FromFamilyName("Courier New", SKFontStyle.Normal)
+        };
+
+        canvas.DrawText("Código de barras inválido", 300, 35, paint);
+        canvas.DrawText(codigoBarras, 300, 55, paint);
+
+        using var image = SKImage.FromBitmap(bitmap);
+        using var data = image.Encode(SKEncodedImageFormat.Png, 100);
+        return data.ToArray();
     }
 
     private BoletoResponseDto MapToResponseDto(Boleto boleto)

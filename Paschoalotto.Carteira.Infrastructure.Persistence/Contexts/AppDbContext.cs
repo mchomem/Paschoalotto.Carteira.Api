@@ -9,6 +9,7 @@ public class AppDbContext : DbContext
     public DbSet<Contrato> Contratos { get; set; }
     public DbSet<Parcela> Parcelas { get; set; }
     public DbSet<Acordo> Acordos { get; set; }
+    public DbSet<ParcelaAcordo> ParcelasAcordo { get; set; }
     public DbSet<Boleto> Boletos { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)

@@ -31,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IContratoRepository, ContratoRepository>();
         services.AddScoped<IParcelaRepository, ParcelaRepository>();
         services.AddScoped<IAcordoRepository, AcordoRepository>();
+        services.AddScoped<IParcelaAcordoRepository, ParcelaAcordoRepository>();
         services.AddScoped<IBoletoRepository, BoletoRepository>();
 
         #endregion
@@ -41,6 +42,7 @@ public static class DependencyInjection
         services.AddScoped<IContratoService, ContratoService>();
         services.AddScoped<IDebtCalculationService, DebtCalculationService>();
         services.AddScoped<IAgreementService, AgreementService>();
+        services.AddScoped<IParcelaAcordoService, ParcelaAcordoService>();
         services.AddScoped<IBoletoService, BoletoService>();
 
         #endregion

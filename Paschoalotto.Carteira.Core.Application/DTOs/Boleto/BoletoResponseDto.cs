@@ -6,6 +6,8 @@ public class BoletoResponseDto
 {
     public int Id { get; set; }
     public int AcordoId { get; set; }
+    public int? ParcelaAcordoId { get; set; }
+    public int? NumeroParcela { get; set; }
     public string NossoNumero { get; set; } = string.Empty;
     public string LinhaDigitavel { get; set; } = string.Empty;
     public string CodigoBarras { get; set; } = string.Empty;

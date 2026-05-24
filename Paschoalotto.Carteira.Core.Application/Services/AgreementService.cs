@@ -13,15 +13,18 @@ public class AgreementService : IAgreementService
 {
     private readonly IAcordoRepository _acordoRepository;
     private readonly IContratoRepository _contratoRepository;
+    private readonly IParcelaAcordoRepository _parcelaAcordoRepository;
     private readonly IDebtCalculationService _debtCalculationService;
 
     public AgreementService(
         IAcordoRepository acordoRepository,
         IContratoRepository contratoRepository,
+        IParcelaAcordoRepository parcelaAcordoRepository,
         IDebtCalculationService debtCalculationService)
     {
         _acordoRepository = acordoRepository;
         _contratoRepository = contratoRepository;
+        _parcelaAcordoRepository = parcelaAcordoRepository;
         _debtCalculationService = debtCalculationService;
     }
 
@@ -109,14 +112,34 @@ public class AgreementService : IAgreementService
 
         var acordoCriado = await _acordoRepository.AddAsync(acordo);
 
+        // Criar parcelas do acordo
+        var parcelas = new List<ParcelaAcordo>();
+        for (int i = 1; i <= request.QuantidadeParcelas; i++)
+        {
+            var dataVencimentoParcela = request.DataPrimeiroVencimento.AddMonths(i - 1);
+
+            var parcelaAcordo = new ParcelaAcordo
+            {
+                AcordoId = acordoCriado.Id,
+                NumeroParcela = i,
+                Valor = valorParcela,
+                DataVencimento = dataVencimentoParcela,
+                Status = StatusParcelaAcordo.Pendente,
+                DataCadastro = DateTime.Now
+            };
+
+            var parcelaCriada = await _parcelaAcordoRepository.AddAsync(parcelaAcordo);
+            parcelas.Add(parcelaCriada);
+        }
+
         // Atualizar status do contrato para EmAcordo
         contrato.Status = StatusContrato.EmAcordo;
         contrato.DataAtualizacao = DateTime.Now;
         await _contratoRepository.UpdateAsync(contrato);
 
         // Atualizar parcelas do contrato para EmAcordo
-        var parcelas = contrato.Parcelas.Where(p => p.Status == StatusParcela.Aberta || p.Status == StatusParcela.Vencida);
-        foreach (var parcela in parcelas)
+        var parcelasContrato = contrato.Parcelas.Where(p => p.Status == StatusParcela.Aberta || p.Status == StatusParcela.Vencida);
+        foreach (var parcela in parcelasContrato)
         {
             parcela.Status = StatusParcela.EmAcordo;
             parcela.DataAtualizacao = DateTime.Now;

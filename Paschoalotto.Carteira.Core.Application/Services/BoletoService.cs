@@ -16,17 +16,20 @@ public class BoletoService : IBoletoService
 {
     private readonly IBoletoRepository _boletoRepository;
     private readonly IAcordoRepository _acordoRepository;
+    private readonly IParcelaAcordoRepository _parcelaAcordoRepository;
     private readonly IContratoRepository _contratoRepository;
     private readonly IClienteRepository _clienteRepository;
 
     public BoletoService(
         IBoletoRepository boletoRepository,
         IAcordoRepository acordoRepository,
+        IParcelaAcordoRepository parcelaAcordoRepository,
         IContratoRepository contratoRepository,
         IClienteRepository clienteRepository)
     {
         _boletoRepository = boletoRepository;
         _acordoRepository = acordoRepository;
+        _parcelaAcordoRepository = parcelaAcordoRepository;
         _contratoRepository = contratoRepository;
         _clienteRepository = clienteRepository;
 
@@ -44,29 +47,56 @@ public class BoletoService : IBoletoService
         if (acordo.Status != StatusAcordo.Ativo)
             throw new BoletoInvalidOperationException($"Não é possível gerar boleto para acordo com status {acordo.Status}");
 
+        // Buscar parcela específica se informada
+        ParcelaAcordo? parcelaAcordo = null;
+        decimal valorBoleto = acordo.ValorParcela;
+        DateTime dataVencimento = acordo.DataPrimeiroVencimento;
+
+        if (request.ParcelaAcordoId.HasValue)
+        {
+            parcelaAcordo = await _parcelaAcordoRepository.GetByIdAsync(request.ParcelaAcordoId.Value);
+            if (parcelaAcordo == null)
+                throw new BoletoInvalidOperationException("Parcela do acordo não encontrada.");
+
+            if (parcelaAcordo.AcordoId != request.AcordoId)
+                throw new BoletoInvalidOperationException("A parcela não pertence ao acordo informado.");
+
+            if (parcelaAcordo.Status != StatusParcelaAcordo.Pendente)
+                throw new BoletoInvalidOperationException($"Não é possível gerar boleto para parcela com status {parcelaAcordo.Status}");
+
+            // Verificar se já existe boleto para esta parcela
+            var boletosExistentes = await _boletoRepository.GetByAcordoIdAsync(request.AcordoId);
+            if (boletosExistentes.Any(b => b.ParcelaAcordoId == request.ParcelaAcordoId && b.Status != StatusBoleto.Cancelado))
+                throw new BoletoInvalidOperationException("Já existe um boleto ativo para esta parcela.");
+
+            valorBoleto = parcelaAcordo.Valor;
+            dataVencimento = parcelaAcordo.DataVencimento;
+        }
+
         // Gerar nosso número único
         var nossoNumero = GerarNossoNumero();
 
         // Gerar linha digitável e código de barras (simplificado)
-        var linhaDigitavel = GerarLinhaDigitavel(nossoNumero, acordo.ValorParcela);
-        var codigoBarras = GerarCodigoBarras(nossoNumero, acordo.ValorParcela);
+        var linhaDigitavel = GerarLinhaDigitavel(nossoNumero, valorBoleto);
+        var codigoBarras = GerarCodigoBarras(nossoNumero, valorBoleto);
 
         // Criar boleto
         var boleto = new Boleto
         {
             AcordoId = request.AcordoId,
+            ParcelaAcordoId = request.ParcelaAcordoId,
             NossoNumero = nossoNumero,
             LinhaDigitavel = linhaDigitavel,
             CodigoBarras = codigoBarras,
-            Valor = acordo.ValorParcela,
-            DataVencimento = acordo.DataPrimeiroVencimento,
+            Valor = valorBoleto,
+            DataVencimento = dataVencimento,
             Status = StatusBoleto.Pendente,
             DataEmissao = DateTime.Now
         };
 
         var boletoCriado = await _boletoRepository.AddAsync(boleto);
 
-        return MapToResponseDto(boletoCriado);
+        return MapToResponseDto(boletoCriado, parcelaAcordo);
     }
 
     public async Task<BoletoPdfResponseDto> GerarBoletoPdfAsync(int boletoId)
@@ -101,7 +131,7 @@ public class BoletoService : IBoletoService
     public async Task<IEnumerable<BoletoResponseDto>> GetByAcordoIdAsync(int acordoId)
     {
         var boletos = await _boletoRepository.GetByAcordoIdAsync(acordoId);
-        return boletos.Select(MapToResponseDto);
+        return boletos.Select(b => MapToResponseDto(b));
     }
 
     public async Task<BoletoResponseDto?> GetByIdAsync(int id)
@@ -394,12 +424,14 @@ public class BoletoService : IBoletoService
         return data.ToArray();
     }
 
-    private BoletoResponseDto MapToResponseDto(Boleto boleto)
+    private BoletoResponseDto MapToResponseDto(Boleto boleto, ParcelaAcordo? parcelaAcordo = null)
     {
         return new BoletoResponseDto
         {
             Id = boleto.Id,
             AcordoId = boleto.AcordoId,
+            ParcelaAcordoId = boleto.ParcelaAcordoId,
+            NumeroParcela = parcelaAcordo?.NumeroParcela,
             NossoNumero = boleto.NossoNumero,
             LinhaDigitavel = boleto.LinhaDigitavel,
             CodigoBarras = boleto.CodigoBarras,

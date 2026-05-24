@@ -6,6 +6,7 @@ public class Boleto
 {
     public int Id { get; set; }
     public int AcordoId { get; set; }
+    public int? ParcelaAcordoId { get; set; }
     public string NossoNumero { get; set; } = string.Empty;
     public string LinhaDigitavel { get; set; } = string.Empty;
     public string CodigoBarras { get; set; } = string.Empty;
@@ -20,4 +21,5 @@ public class Boleto
 
     // Relacionamentos
     public Acordo Acordo { get; set; } = null!;
+    public ParcelaAcordo? ParcelaAcordo { get; set; }
 }

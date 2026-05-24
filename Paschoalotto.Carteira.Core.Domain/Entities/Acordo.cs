@@ -22,5 +22,6 @@ public class Acordo
 
     // Relacionamentos
     public Contrato Contrato { get; set; } = null!;
+    public ICollection<ParcelaAcordo> Parcelas { get; set; } = new List<ParcelaAcordo>();
     public ICollection<Boleto> Boletos { get; set; } = new List<Boleto>();
 }

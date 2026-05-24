@@ -19,7 +19,7 @@ public class ClienteController : ControllerBase
     public async Task<IActionResult> Create([FromBody] ClienteRequestDto request)
     {
         var cliente = await _clienteService.CreateAsync(request);
-        return CreatedAtAction(nameof(GetById), new { id = cliente.Id }, 
+        return CreatedAtAction(nameof(GetById), new { id = cliente.Id },
             ApiResponse<ClienteResponseDto>.SuccessResult(cliente, "Cliente criado com sucesso."));
     }
 
@@ -60,6 +60,20 @@ public class ClienteController : ControllerBase
             return NotFound(ApiResponse<ClienteResponseDto>.Failure("Cliente não encontrado."));
 
         return Ok(ApiResponse<ClienteResponseDto>.SuccessResult(cliente));
+    }
+
+    /// <summary>
+    /// Busca dados consolidados de um cliente por documento (CPF/CNPJ) - Dashboard
+    /// </summary>
+    [HttpGet("documento/{documento}/dashboard")]
+    [ProducesResponseType(typeof(ApiResponse<ClienteDashboardDto>), StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetDashboardByDocumento(string documento)
+    {
+        var dashboard = await _clienteService.GetDashboardByDocumentoAsync(documento);
+        if (dashboard == null)
+            return NotFound(ApiResponse<ClienteDashboardDto>.Failure("Cliente não encontrado."));
+
+        return Ok(ApiResponse<ClienteDashboardDto>.SuccessResult(dashboard, "Dados do cliente carregados com sucesso."));
     }
 
     /// <summary>

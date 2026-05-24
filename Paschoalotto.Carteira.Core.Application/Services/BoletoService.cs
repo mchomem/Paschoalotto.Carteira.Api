@@ -84,7 +84,7 @@ public class BoletoService : IBoletoService
 
         // Atualizar boleto com PDF
         boleto.DocumentoPdfBase64 = pdfBase64;
-        boleto.DataAtualizacao = DateTime.Now;
+        boleto.DataAtualizacao = DateTime.UtcNow;
         await _boletoRepository.UpdateAsync(boleto);
 
         return new BoletoPdfResponseDto

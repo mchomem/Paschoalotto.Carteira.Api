@@ -1,3 +1,14 @@
+﻿-- ====================================================================
+-- Script de Carga Completa - Paschoalotto Carteira API
+-- ====================================================================
+-- Descrição: Script unificado com todos os dados de teste
+--            Inclui dados completos para o cliente CPF 123.456.789-01
+-- Ambiente: Desenvolvimento/Testes
+-- Database: PostgreSQL
+-- Versão: 3.0 - Script Unificado
+-- ====================================================================
+-- ATENÇÃO: Este script TRUNCA TODAS AS TABELAS antes de inserir dados
+-- ====================================================================
 -- ====================================================================
 -- Script de Carga Inicial - Paschoalotto Carteira API (ATUALIZADO)
 -- ====================================================================
@@ -33,7 +44,7 @@ ALTER SEQUENCE "Boletos_Id_seq" RESTART WITH 1;
 -- CLIENTES (25 PF + 15 PJ = 40 clientes)
 -- ====================================================================
 
--- Pessoas Físicas (TipoPessoa = 0)
+-- Pessoas FÃƒÂ­sicas (TipoPessoa = 0)
 INSERT INTO "Clientes"
     ("TipoPessoa", "Nome", "Documento", "Email", "Telefone", "Endereco", "Cidade", "Estado", "Cep", "DataCadastro", "Ativo")
 VALUES
@@ -88,7 +99,7 @@ VALUES
 () - INTERVAL '1 day'),
 (2, 'CTR-2023-000002', 25000.00, 28750.00, 2.00, 2.00, 0.40, NOW
 () - INTERVAL '16 months', NOW
-() - INTERVAL '4 months', 0, 'Financiamento de veículo em atraso', NOW
+() - INTERVAL '4 months', 0, 'Financiamento de veÃƒÂ­culo em atraso', NOW
 () - INTERVAL '16 months', NOW
 () - INTERVAL '2 days'),
 (3, 'CTR-2023-000003', 8500.00, 9200.00, 3.00, 2.00, 0.60, NOW
@@ -116,7 +127,7 @@ VALUES
 () - INTERVAL '5 months', 1, 'Acordo de renegociação ativo', NOW
 () - INTERVAL '17 months', NOW
 () - INTERVAL '1 month'),
-(7, 'CTR-2024-000012', 32000.00, 35200.00, 2.10, 2.00, 0.42, NOW
+(7, 'CTR-2024-000017', 32000.00, 35200.00, 2.10, 2.00, 0.42, NOW
 () - INTERVAL '19 months', NOW
 () - INTERVAL '7 months', 1, 'Em processo de negociação', NOW
 () - INTERVAL '19 months', NOW
@@ -138,10 +149,10 @@ VALUES
 () - INTERVAL '5 days');
 
 -- ====================================================================
--- PARCELAS (gerando múltiplas parcelas por contrato)
+-- PARCELAS (gerando mÃƒÂºltiplas parcelas por contrato)
 -- ====================================================================
 
--- Parcelas do Contrato 1 (12 parcelas - várias vencidas)
+-- Parcelas do Contrato 1 (12 parcelas - vÃƒÂ¡rias vencidas)
 INSERT INTO "Parcelas"
     ("ContratoId", "NumeroParcela", "ValorOriginal", "ValorAtualizado", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DiasAtraso", "DataCadastro", "DataAtualizacao")
 VALUES
@@ -829,7 +840,7 @@ VALUES
 ());
 
 -- ====================================================================
--- QUERIES DE VERIFICAÇÃO
+-- QUERIES DE VERIFICAÃƒâ€¡ÃƒÆ’O
 -- ====================================================================
 
 -- Contadores gerais
@@ -864,7 +875,7 @@ SELECT
     CASE "Status"
         WHEN 0 THEN 'Ativo'
         WHEN 1 THEN 'Cancelado'
-        WHEN 2 THEN 'Concluído'
+        WHEN 2 THEN 'ConcluÃƒÂ­do'
     END AS "Status Acordo",
     COUNT(*) AS "Quantidade"
 FROM "Acordos"
@@ -907,6 +918,610 @@ SELECT
     'Boletos de parcelas (com parcela): ' || COUNT(*)
 FROM "Boletos"
 WHERE "ParcelaAcordoId" IS NOT NULL;
+
+-- ====================================================================
+-- FIM DO SCRIPT
+-- ====================================================================
+
+-- ====================================================================
+-- PARTE 2: DADOS ADICIONAIS PARA CLIENTE CPF 123.456.789-01
+-- ====================================================================
+-- ====================================================================
+-- Script Complementar - Dados de Teste para CPF 123.456.789-01
+-- ====================================================================
+-- Descrição: Adiciona contratos, acordos, boletos e parcelas para o 
+--            cliente João da Silva Santos (CPF 123.456.789-01)
+-- Ambiente: Desenvolvimento/Testes
+-- Database: PostgreSQL
+-- Versão: 1.0
+-- ====================================================================
+-- Execute este script DEPOIS do script principal
+--             (01_CargaInicial_DadosTeste_Corrigido.sql)
+-- ====================================================================
+
+-- ====================================================================
+-- CONTRATOS ADICIONAIS PARA O CLIENTE 1 (CPF 123.456.789-01)
+-- Cliente 1 jé tem o Contrato ID 1, vamos adicionar IDs 18 e 19
+-- ====================================================================
+
+-- Contrato 2: Em Acordo (Status = 1)
+INSERT INTO "Contratos"
+    ("Id", "ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor",
+    "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria",
+    "DataContrato", "DataVencimento", "Status", "Observacoes",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    (18, 1, 'CTR-2024-000018', 22000.00, 24200.00, 2.30, 2.00, 0.48,
+        NOW() - INTERVAL
+'15 months', NOW
+() - INTERVAL '3 months', 1, 
+     'Contrato de financiamento com acordo ativo', 
+     NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks');
+
+-- Contrato 3: Aberto (Status = 0) - sem acordo ainda
+INSERT INTO "Contratos"
+    ("Id", "ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor",
+    "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria",
+    "DataContrato", "DataVencimento", "Status", "Observacoes",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    (19, 1, 'CTR-2024-000019', 6500.00, 7150.00, 2.80, 2.00, 0.55,
+        NOW() - INTERVAL
+'10 months', NOW
+() - INTERVAL '2 months', 0, 
+     'Empréstimo pessoal em atraso - disponével para negociação', 
+     NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week');
+
+-- ====================================================================
+
+-- Atualizar sequÃªncia de Contratos para continuar do ID 20
+SELECT setval('"Contratos_Id_seq"', 19, true);
+
+-- PARCELAS DO CONTRATO 18 (8 parcelas)
+-- ====================================================================
+
+INSERT INTO "Parcelas"
+    ("ContratoId", "NumeroParcela", "ValorOriginal", "ValorAtualizado",
+    "DataVencimento", "DataPagamento", "ValorPago", "Status", "DiasAtraso",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    -- 3 parcelas pagas
+    (18, 1, 2750.00, 3025.00, NOW() - INTERVAL
+'15 months', NOW
+() - INTERVAL '14 months 20 days', 2750.00, 1, NULL, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '14 months 20 days'),
+    (18, 2, 2750.00, 3025.00, NOW
+() - INTERVAL '14 months', NOW
+() - INTERVAL '13 months 15 days', 2750.00, 1, NULL, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '13 months 15 days'),
+    (18, 3, 2750.00, 3025.00, NOW
+() - INTERVAL '13 months', NOW
+() - INTERVAL '12 months 10 days', 2750.00, 1, NULL, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '12 months 10 days'),
+-- 5 parcelas vencidas (que entraram em acordo)
+    (18, 4, 2750.00, 3025.00, NOW
+() - INTERVAL '12 months', NULL, NULL, 3, 360, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks'),
+    (18, 5, 2750.00, 3025.00, NOW
+() - INTERVAL '11 months', NULL, NULL, 3, 330, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks'),
+    (18, 6, 2750.00, 3025.00, NOW
+() - INTERVAL '10 months', NULL, NULL, 3, 300, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks'),
+    (18, 7, 2750.00, 3025.00, NOW
+() - INTERVAL '9 months', NULL, NULL, 3, 270, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks'),
+    (18, 8, 2750.00, 3025.00, NOW
+() - INTERVAL '8 months', NULL, NULL, 3, 240, NOW
+() - INTERVAL '15 months', NOW
+() - INTERVAL '2 weeks');
+
+-- ====================================================================
+-- PARCELAS DO CONTRATO 19 (10 parcelas)
+-- ====================================================================
+
+INSERT INTO "Parcelas"
+    ("ContratoId", "NumeroParcela", "ValorOriginal", "ValorAtualizado",
+    "DataVencimento", "DataPagamento", "ValorPago", "Status", "DiasAtraso",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    -- 2 parcelas pagas
+    (19, 1, 650.00, 715.00, NOW() - INTERVAL
+'10 months', NOW
+() - INTERVAL '9 months 25 days', 650.00, 1, NULL, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '9 months 25 days'),
+    (19, 2, 650.00, 715.00, NOW
+() - INTERVAL '9 months', NOW
+() - INTERVAL '8 months 22 days', 650.00, 1, NULL, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '8 months 22 days'),
+-- 8 parcelas vencidas
+    (19, 3, 650.00, 715.00, NOW
+() - INTERVAL '8 months', NULL, NULL, 2, 240, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+    (19, 4, 650.00, 715.00, NOW
+() - INTERVAL '7 months', NULL, NULL, 2, 210, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+    (19, 5, 650.00, 715.00, NOW
+() - INTERVAL '6 months', NULL, NULL, 2, 180, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+    (19, 6, 650.00, 715.00, NOW
+() - INTERVAL '5 months', NULL, NULL, 2, 150, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+    (19, 7, 650.00, 715.00, NOW
+() - INTERVAL '4 months', NULL, NULL, 2, 120, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+    (19, 8, 650.00, 715.00, NOW
+() - INTERVAL '3 months', NULL, NULL, 2, 90, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+(19, 9, 650.00, 715.00, NOW
+() - INTERVAL '2 months', NULL, NULL, 2, 60, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week'),
+(19, 10, 650.00, 715.00, NOW
+() - INTERVAL '1 month', NULL, NULL, 2, 30, NOW
+() - INTERVAL '10 months', NOW
+() - INTERVAL '1 week');
+
+-- ====================================================================
+-- ACORDO PARA O CONTRATO 18 (Acordo ID 6)
+-- ====================================================================
+
+INSERT INTO "Acordos"
+    ("ContratoId", "NumeroAcordo", "ValorTotalDivida", "ValorDesconto",
+    "ValorTotalAcordo", "ValorEntrada", "QuantidadeParcelas", "ValorParcela",
+    "DataPrimeiroVencimento", "DataAcordo", "Status", "Observacoes",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    (18, 'ACO-2024-000006', 15125.00, 2268.75, 12856.25, 1500.00, 15, 755.75,
+        NOW() + INTERVAL
+'8 days', NOW
+() - INTERVAL '2 weeks', 0, 
+     'Acordo com 15% de desconto sobre 5 parcelas vencidas', 
+     NOW
+() - INTERVAL '2 weeks', NOW
+() - INTERVAL '3 days');
+
+-- ====================================================================
+-- PARCELAS DO ACORDO 6 (15 parcelas)
+-- ====================================================================
+
+INSERT INTO "ParcelasAcordo"
+    ("AcordoId", "NumeroParcela", "Valor", "DataVencimento",
+    "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
+VALUES
+    (6, 1, 755.75, NOW() + INTERVAL
+'8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 2, 755.75, NOW
+() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 3, 755.75, NOW
+() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 4, 755.75, NOW
+() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 5, 755.75, NOW
+() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 6, 755.75, NOW
+() + INTERVAL '5 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 7, 755.75, NOW
+() + INTERVAL '6 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 8, 755.75, NOW
+() + INTERVAL '7 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 9, 755.75, NOW
+() + INTERVAL '8 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 10, 755.75, NOW
+() + INTERVAL '9 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 11, 755.75, NOW
+() + INTERVAL '10 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 12, 755.75, NOW
+() + INTERVAL '11 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 13, 755.75, NOW
+() + INTERVAL '12 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 14, 755.75, NOW
+() + INTERVAL '13 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+()),
+(6, 15, 755.75, NOW
+() + INTERVAL '14 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() - INTERVAL '2 weeks', NOW
+());
+
+-- ====================================================================
+-- BOLETOS DO ACORDO 6
+-- Nota: As ParcelasAcordo IDs começam apÃƒÂ³s as do script principal
+--       O script principal tinha 100 ParcelasAcordo, então os novos 
+--       IDs começam em 101
+-- ====================================================================
+
+INSERT INTO "Boletos"
+    ("AcordoId", "ParcelaAcordoId", "NossoNumero", "LinhaDigitavel",
+    "CodigoBarras", "Valor", "DataVencimento", "DataPagamento", "ValorPago",
+    "Status", "DocumentoPdfBase64", "DataEmissao", "DataAtualizacao")
+VALUES
+    -- Boleto de entrada (sem ParcelaAcordoId)
+    (6, NULL, '000000021-4', '23790.00001 00000.000021 00000.000021 4 00000000000150',
+        '23790000000000000000000000000000000000000021', 1500.00,
+        NOW() - INTERVAL
+'2 weeks' + INTERVAL '3 days', NULL, NULL, 2, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+() - INTERVAL '1 day'),
+
+-- Boletos das 5 primeiras parcelas
+(6, 101, '000000022-2', '23790.00001 00000.000022 00000.000022 2 00000000000075', 
+     '23790000000000000000000000000000000000000022', 755.75, 
+     NOW
+() + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+()),
+
+(6, 102, '000000023-0', '23790.00001 00000.000023 00000.000023 0 00000000000075', 
+     '23790000000000000000000000000000000000000023', 755.75, 
+     NOW
+() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+()),
+
+(6, 103, '000000024-9', '23790.00001 00000.000024 00000.000024 9 00000000000075', 
+     '23790000000000000000000000000000000000000024', 755.75, 
+     NOW
+() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+()),
+
+(6, 104, '000000025-7', '23790.00001 00000.000025 00000.000025 7 00000000000075', 
+     '23790000000000000000000000000000000000000025', 755.75, 
+     NOW
+() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+()),
+
+(6, 105, '000000026-5', '23790.00001 00000.000026 00000.000026 5 00000000000075', 
+     '23790000000000000000000000000000000000000026', 755.75, 
+     NOW
+() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '2 weeks', NOW
+());
+
+-- ====================================================================
+-- ACORDO PARA O CONTRATO 1 (Acordo ID 7)
+-- ====================================================================
+-- Este acordo é para as 9 parcelas vencidas do contrato original
+-- Vamos dar um desconto maior jÃƒÂ¡ que é o contrato mais antigo
+
+INSERT INTO "Acordos"
+    ("ContratoId", "NumeroAcordo", "ValorTotalDivida", "ValorDesconto",
+    "ValorTotalAcordo", "ValorEntrada", "QuantidadeParcelas", "ValorParcela",
+    "DataPrimeiroVencimento", "DataAcordo", "Status", "Observacoes",
+    "DataCadastro", "DataAtualizacao")
+VALUES
+    (1, 'ACO-2024-000007', 14062.50, 3515.63, 10546.87, 2000.00, 12, 712.24,
+        NOW() + INTERVAL
+'10 days', NOW
+() - INTERVAL '1 week', 0, 
+     'Acordo com 25% de desconto sobre 9 parcelas vencidas do contrato mais antigo', 
+     NOW
+() - INTERVAL '1 week', NOW
+() - INTERVAL '2 days');
+
+-- ====================================================================
+-- PARCELAS DO ACORDO 7 (12 parcelas)
+-- ====================================================================
+
+INSERT INTO "ParcelasAcordo"
+    ("AcordoId", "NumeroParcela", "Valor", "DataVencimento",
+    "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
+VALUES
+    (7, 1, 712.24, NOW() + INTERVAL
+'10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 2, 712.24, NOW
+() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 3, 712.24, NOW
+() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 4, 712.24, NOW
+() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 5, 712.24, NOW
+() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 6, 712.24, NOW
+() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 7, 712.24, NOW
+() + INTERVAL '6 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 8, 712.24, NOW
+() + INTERVAL '7 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 9, 712.24, NOW
+() + INTERVAL '8 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 10, 712.24, NOW
+() + INTERVAL '9 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 11, 712.24, NOW
+() + INTERVAL '10 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+()),
+(7, 12, 712.24, NOW
+() + INTERVAL '11 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() - INTERVAL '1 week', NOW
+());
+
+-- ====================================================================
+-- BOLETOS DO ACORDO 7
+-- As ParcelasAcordo IDs continuam: 116-127
+-- ====================================================================
+
+INSERT INTO "Boletos"
+    ("AcordoId", "ParcelaAcordoId", "NossoNumero", "LinhaDigitavel",
+    "CodigoBarras", "Valor", "DataVencimento", "DataPagamento", "ValorPago",
+    "Status", "DocumentoPdfBase64", "DataEmissao", "DataAtualizacao")
+VALUES
+    -- Boleto de entrada PAGO
+    (7, NULL, '000000027-3', '23790.00001 00000.000027 00000.000027 3 00000000000200',
+        '23790000000000000000000000000000000000000027', 2000.00,
+        NOW() - INTERVAL
+'1 week' + INTERVAL '2 days', NOW
+() - INTERVAL '5 days', 2000.00, 1, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+() - INTERVAL '5 days'),
+
+-- Boletos das 6 primeiras parcelas
+(7, 116, '000000028-1', '23790.00001 00000.000028 00000.000028 1 00000000000071', 
+     '23790000000000000000000000000000000000000028', 712.24, 
+     NOW
+() + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+()),
+
+(7, 117, '000000029-0', '23790.00001 00000.000029 00000.000029 0 00000000000071', 
+     '23790000000000000000000000000000000000000029', 712.24, 
+     NOW
+() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+()),
+
+(7, 118, '000000030-3', '23790.00001 00000.000030 00000.000030 3 00000000000071', 
+     '23790000000000000000000000000000000000000030', 712.24, 
+     NOW
+() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+()),
+
+(7, 119, '000000031-1', '23790.00001 00000.000031 00000.000031 1 00000000000071', 
+     '23790000000000000000000000000000000000000031', 712.24, 
+     NOW
+() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+()),
+
+(7, 120, '000000032-0', '23790.00001 00000.000032 00000.000032 0 00000000000071', 
+     '23790000000000000000000000000000000000000032', 712.24, 
+     NOW
+() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+()),
+
+(7, 121, '000000033-8', '23790.00001 00000.000033 00000.000033 8 00000000000071', 
+     '23790000000000000000000000000000000000000033', 712.24, 
+     NOW
+() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+     NOW
+() - INTERVAL '1 week', NOW
+());
+
+-- ====================================================================
+-- QUERIES DE VERIFICAÃƒâ€¡ÃƒÆ’O ESPECÃƒÂFICAS DO CLIENTE 1
+-- ====================================================================
+
+-- Resumo do cliente CPF 123.456.789-01
+SELECT
+    'Cliente: ' || c."Nome" AS "Info",
+    'CPF: ' || c."Documento" AS "Documento",
+    'Email: ' || c."Email" AS "Email"
+FROM "Clientes" c
+WHERE c."Id" = 1;
+
+-- Contratos do cliente
+SELECT
+    'Contrato ' || co."NumeroContrato" AS "Contrato",
+    'Valor Original: R$ ' || co."ValorOriginal" AS "Valor Original",
+    'Saldo Devedor: R$ ' || co."SaldoDevedor" AS "Saldo Devedor",
+    CASE co."Status"
+        WHEN 0 THEN 'Aberto'
+        WHEN 1 THEN 'Em Acordo'
+        WHEN 2 THEN 'Pago'
+        WHEN 3 THEN 'Cancelado'
+    END AS "Status"
+FROM "Contratos" co
+WHERE co."ClienteId" = 1
+ORDER BY co."Id";
+
+-- Acordos do cliente
+SELECT
+    'Acordo ' || a."NumeroAcordo" AS "Acordo",
+    'Contrato: ' || co."NumeroContrato" AS "Contrato",
+    'Valor DÃƒÂ­vida: R$ ' || a."ValorTotalDivida" AS "Valor DÃƒÂ­vida",
+    'Desconto: R$ ' || a."ValorDesconto" AS "Desconto",
+    'Valor Acordo: R$ ' || a."ValorTotalAcordo" AS "Valor Acordo",
+    a."QuantidadeParcelas" || 'x de R$ ' || a."ValorParcela" AS "Parcelamento"
+FROM "Acordos" a
+    INNER JOIN "Contratos" co ON a."ContratoId" = co."Id"
+WHERE co."ClienteId" = 1
+ORDER BY a."Id";
+
+-- Boletos do cliente
+SELECT
+    'Boleto ' || b."NossoNumero" AS "Boleto",
+    'Acordo: ' || a."NumeroAcordo" AS "Acordo",
+    'Valor: R$ ' || b."Valor" AS "Valor",
+    TO_CHAR(b."DataVencimento", 'DD/MM/YYYY') AS "Vencimento",
+    CASE b."Status"
+        WHEN 0 THEN 'Pendente'
+        WHEN 1 THEN 'Pago'
+        WHEN 2 THEN 'Vencido'
+        WHEN 3 THEN 'Cancelado'
+    END AS "Status"
+FROM "Boletos" b
+    INNER JOIN "Acordos" a ON b."AcordoId" = a."Id"
+    INNER JOIN "Contratos" co ON a."ContratoId" = co."Id"
+WHERE co."ClienteId" = 1
+ORDER BY b."Id";
+
+-- Contadores do cliente
+SELECT
+    'Total de Contratos: ' || COUNT(DISTINCT co."Id") AS "Contratos",
+    'Total de Acordos: ' || COUNT(DISTINCT a."Id") AS "Acordos",
+    'Total de Boletos: ' || COUNT(b."Id") AS "Boletos"
+FROM "Contratos" co
+    LEFT JOIN "Acordos" a ON a."ContratoId" = co."Id"
+    LEFT JOIN "Boletos" b ON b."AcordoId" = a."Id"
+WHERE co."ClienteId" = 1;
+
+-- Soma das dÃƒÂ­vidas
+SELECT
+    'Total em DÃƒÂ­vida: R$ ' || SUM(co."SaldoDevedor") AS "Total DÃƒÂ­vida"
+FROM "Contratos" co
+WHERE co."ClienteId" = 1 AND co."Status" IN (0, 1);
+
+-- ====================================================================
+-- FIM DO SCRIPT
+-- ====================================================================
+-- RESUMO DO CLIENTE 1 (CPF 123.456.789-01):
+-- - 3 Contratos (IDs: 1, 16, 17)
+-- - 2 Acordos (IDs: 6, 7)
+-- - 27 Parcelas de Acordo (15 + 12)
+-- - 13 Boletos (6 + 7)
+-- ====================================================================
+
+-- ====================================================================
+-- PARTE 3: ATUALIZAÇÃO DE STATUS DO CONTRATO 1
+-- ====================================================================
+-- ====================================================================
+-- Script de Atualização - Contrato 1 Entra em Acordo
+-- ====================================================================
+-- Descrição: Atualiza o status do Contrato 1 e suas parcelas vencidas
+--            para refletir que agora há um acordo ativo
+-- Ambiente: Desenvolvimento/Testes
+-- Database: PostgreSQL
+-- Versão: 1.0
+-- ====================================================================
+-- Execute este script DEPOIS dos scripts:
+--             1. 01_CargaInicial_DadosTeste_Corrigido.sql
+--             2. 02_DadosTeste_Cliente_CPF_123456789-01.sql
+-- ====================================================================
+
+-- ====================================================================
+-- ATUALIZAR STATUS DO CONTRATO 1 PARA "EM ACORDO"
+-- ====================================================================
+
+UPDATE "Contratos"
+SET 
+    "Status" = 1,  -- 1 = Em Acordo
+    "DataAtualizacao" = NOW()
+WHERE "Id" = 1;
+
+-- ====================================================================
+-- ATUALIZAR PARCELAS VENCIDAS DO CONTRATO 1 PARA "EM ACORDO"
+-- Parcelas 4-12 estavam como Status 2 (Vencida)
+-- Agora devem ser Status 3 (EmAcordo)
+-- ====================================================================
+
+UPDATE "Parcelas"
+SET 
+    "Status" = 3,  -- 3 = EmAcordo
+    "DataAtualizacao" = NOW()
+WHERE "ContratoId" = 1
+    AND "NumeroParcela" BETWEEN 4 AND 12;
+
+-- ====================================================================
+-- QUERY DE VERIFICAÇÃO
+-- ====================================================================
+
+SELECT
+    'Contrato ' || c."NumeroContrato" AS "Contrato",
+    CASE c."Status"
+        WHEN 0 THEN 'Aberto'
+        WHEN 1 THEN 'Em Acordo'
+        WHEN 2 THEN 'Pago'
+        WHEN 3 THEN 'Cancelado'
+    END AS "Status Contrato",
+    COUNT(p."Id") AS "Total Parcelas",
+    SUM(CASE WHEN p."Status" = 1 THEN 1 ELSE 0 END) AS "Pagas",
+    SUM(CASE WHEN p."Status" = 2 THEN 1 ELSE 0 END) AS "Vencidas",
+    SUM(CASE WHEN p."Status" = 3 THEN 1 ELSE 0 END) AS "Em Acordo"
+FROM "Contratos" c
+    LEFT JOIN "Parcelas" p ON p."ContratoId" = c."Id"
+WHERE c."Id" = 1
+GROUP BY c."Id", c."NumeroContrato", c."Status";
 
 -- ====================================================================
 -- FIM DO SCRIPT

@@ -85,6 +85,19 @@ cd Paschoalotto.Carteira.Infrastructure.Persistence
 dotnet ef database update --startup-project ..\Paschoalotto.Carteira.Api\Paschoalotto.Carteira.Api.csproj
 ```
 
+4. **(Opcional)** Carregue dados de teste:
+
+```bash
+# Via psql
+psql -h localhost -U postgres -d PaschoalottoCarteira -f Scripts/01_CargaInicial_DadosTeste.sql
+
+# Ou via pgAdmin/DBeaver abrindo o arquivo Scripts/01_CargaInicial_DadosTeste.sql
+```
+
+Este script insere **40 clientes**, **30 contratos**, **40+ parcelas**, **9 acordos** e **20+ boletos** com dados realistas para testes.
+
+⚠️ **Atenção**: O script de carga limpa todos os dados existentes. Use apenas em desenvolvimento!
+
 ### CORS
 
 A API está configurada para aceitar requisições apenas de **http://localhost:4200** (Angular frontend).
@@ -128,9 +141,9 @@ dotnet run
 ```
 
 A API estará disponível em:
-- **HTTP**: `http://localhost:5000`
-- **HTTPS**: `https://localhost:5001`
-- **Swagger UI**: `http://localhost:5000` (raiz)
+- **HTTP**: `http://localhost:5182`
+- **HTTPS**: `https://localhost:7183`
+- **Swagger UI**: `http://localhost:5182` ou `https://localhost:7183` (raiz - abre automaticamente)
 
 ## 📖 Documentação da API
 

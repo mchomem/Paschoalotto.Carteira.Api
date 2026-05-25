@@ -149,7 +149,7 @@ VALUES
 () - INTERVAL '5 days');
 
 -- ====================================================================
--- PARCELAS (gerando mÃƒÂºltiplas parcelas por contrato)
+-- PARCELAS (gerando múltiplas parcelas por contrato)
 -- ====================================================================
 
 -- Parcelas do Contrato 1 (12 parcelas - vÃƒÂ¡rias vencidas)
@@ -251,7 +251,7 @@ VALUES
 -- ACORDOS (alguns com boletos gerados)
 -- ====================================================================
 
--- Acordos Ativos (Status = 0)
+-- Acordos Ativos (Status = 1) e Inativos (Status = 0)
 INSERT INTO "Acordos"
     ("ContratoId", "NumeroAcordo", "ValorTotalDivida", "ValorDesconto", "ValorTotalAcordo", "ValorEntrada", "QuantidadeParcelas", "ValorParcela", "DataPrimeiroVencimento", "DataAcordo", "Status", "Observacoes", "DataCadastro", "DataAtualizacao")
 VALUES
@@ -840,7 +840,7 @@ VALUES
 ());
 
 -- ====================================================================
--- QUERIES DE VERIFICAÃƒâ€¡ÃƒÆ’O
+-- QUERIES DE VERIFICAÇÃO
 -- ====================================================================
 
 -- Contadores gerais
@@ -1086,19 +1086,38 @@ VALUES
 -- ====================================================================
 
 INSERT INTO "Acordos"
-    ("ContratoId", "NumeroAcordo", "ValorTotalDivida", "ValorDesconto",
-    "ValorTotalAcordo", "ValorEntrada", "QuantidadeParcelas", "ValorParcela",
-    "DataPrimeiroVencimento", "DataAcordo", "Status", "Observacoes",
-    "DataCadastro", "DataAtualizacao")
+(
+    "ContratoId"
+    , "NumeroAcordo"
+    , "ValorTotalDivida"
+    , "ValorDesconto"
+    , "ValorTotalAcordo"
+    , "ValorEntrada"
+    , "QuantidadeParcelas"
+    , "ValorParcela"
+    , "DataPrimeiroVencimento"
+    , "DataAcordo"
+    , "Status"
+    , "Observacoes"
+    , "DataCadastro"
+    , "DataAtualizacao"
+)
 VALUES
-    (18, 'ACO-2024-000006', 15125.00, 2268.75, 12856.25, 1500.00, 15, 755.75,
-        NOW() + INTERVAL
-'8 days', NOW
-() - INTERVAL '2 weeks', 0, 
-     'Acordo com 15% de desconto sobre 5 parcelas vencidas', 
-     NOW
-() - INTERVAL '2 weeks', NOW
-() - INTERVAL '3 days');
+(
+    18
+    , 'ACO-2024-000006'
+    , 15125.00
+    , 2268.75
+    , 12856.25
+    , 1500.00
+    , 15, 755.75
+    , NOW() + INTERVAL '8 days'
+    , NOW() - INTERVAL '2 weeks'
+    , 1
+    , 'Acordo com 15% de desconto sobre 5 parcelas vencidas'
+    , NOW() - INTERVAL '2 weeks'
+    , NOW() - INTERVAL '3 days'
+);
 
 -- ====================================================================
 -- PARCELAS DO ACORDO 6 (15 parcelas)
@@ -1238,19 +1257,39 @@ VALUES
 -- Vamos dar um desconto maior jÃƒÂ¡ que é o contrato mais antigo
 
 INSERT INTO "Acordos"
-    ("ContratoId", "NumeroAcordo", "ValorTotalDivida", "ValorDesconto",
-    "ValorTotalAcordo", "ValorEntrada", "QuantidadeParcelas", "ValorParcela",
-    "DataPrimeiroVencimento", "DataAcordo", "Status", "Observacoes",
-    "DataCadastro", "DataAtualizacao")
+(
+    "ContratoId"
+    , "NumeroAcordo"
+    , "ValorTotalDivida"
+    , "ValorDesconto"
+    , "ValorTotalAcordo"
+    , "ValorEntrada"
+    , "QuantidadeParcelas"
+    , "ValorParcela"
+    , "DataPrimeiroVencimento"
+    , "DataAcordo"
+    , "Status"
+    , "Observacoes"
+    , "DataCadastro"
+    , "DataAtualizacao"
+)
 VALUES
-    (1, 'ACO-2024-000007', 14062.50, 3515.63, 10546.87, 2000.00, 12, 712.24,
-        NOW() + INTERVAL
-'10 days', NOW
-() - INTERVAL '1 week', 0, 
-     'Acordo com 25% de desconto sobre 9 parcelas vencidas do contrato mais antigo', 
-     NOW
-() - INTERVAL '1 week', NOW
-() - INTERVAL '2 days');
+(
+    1
+    , 'ACO-2024-000007'
+    , 14062.50
+    , 3515.63
+    , 10546.87
+    , 2000.00
+    , 12
+    , 712.24
+    , NOW() + INTERVAL '10 days'
+    , NOW() - INTERVAL '1 week'
+    , 1
+    , 'Acordo com 25% de desconto sobre 9 parcelas vencidas do contrato mais antigo'
+    , NOW() - INTERVAL '1 week'
+    , NOW() - INTERVAL '2 days'
+);
 
 -- ====================================================================
 -- PARCELAS DO ACORDO 7 (12 parcelas)
@@ -1379,7 +1418,7 @@ VALUES
 ());
 
 -- ====================================================================
--- QUERIES DE VERIFICAÃƒâ€¡ÃƒÆ’O ESPECÃƒÂFICAS DO CLIENTE 1
+-- QUERIES DE VERIFICAÇÃO ESPECÍFICAS DO CLIENTE 1
 -- ====================================================================
 
 -- Resumo do cliente CPF 123.456.789-01

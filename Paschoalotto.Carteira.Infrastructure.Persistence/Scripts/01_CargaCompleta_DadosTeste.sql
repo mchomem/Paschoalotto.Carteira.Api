@@ -44,7 +44,7 @@ ALTER SEQUENCE "Boletos_Id_seq" RESTART WITH 1;
 -- CLIENTES (25 PF + 15 PJ = 40 clientes)
 -- ====================================================================
 
--- Pessoas FÃƒÂ­sicas (TipoPessoa = 0)
+-- Pessoas Fí­sicas (TipoPessoa = 0)
 INSERT INTO "Clientes"
     ("TipoPessoa", "Nome", "Documento", "Email", "Telefone", "Endereco", "Cidade", "Estado", "Cep", "DataCadastro", "Ativo")
 VALUES
@@ -99,7 +99,7 @@ VALUES
 () - INTERVAL '1 day'),
 (2, 'CTR-2023-000002', 25000.00, 28750.00, 2.00, 2.00, 0.40, NOW
 () - INTERVAL '16 months', NOW
-() - INTERVAL '4 months', 0, 'Financiamento de veÃƒÂ­culo em atraso', NOW
+() - INTERVAL '4 months', 0, 'Financiamento de veí­culo em atraso', NOW
 () - INTERVAL '16 months', NOW
 () - INTERVAL '2 days'),
 (3, 'CTR-2023-000003', 8500.00, 9200.00, 3.00, 2.00, 0.60, NOW
@@ -152,7 +152,7 @@ VALUES
 -- PARCELAS (gerando múltiplas parcelas por contrato)
 -- ====================================================================
 
--- Parcelas do Contrato 1 (12 parcelas - vÃƒÂ¡rias vencidas)
+-- Parcelas do Contrato 1 (12 parcelas - ví¡rias vencidas)
 INSERT INTO "Parcelas"
     ("ContratoId", "NumeroParcela", "ValorOriginal", "ValorAtualizado", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DiasAtraso", "DataCadastro", "DataAtualizacao")
 VALUES
@@ -285,157 +285,121 @@ VALUES
 -- PARCELAS ACORDO (parcelas individuais de cada acordo)
 -- ====================================================================
 
--- Parcelas do Acordo 1 (12 parcelas - Status: 0=Pendente)
+-- Parcelas do Acordo 1 (12 parcelas - Status: 1 = Pendente)
 INSERT INTO "ParcelasAcordo"
     ("AcordoId", "NumeroParcela", "Valor", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
-    (1, 1, 1153.33, NOW() + INTERVAL
-'5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 2, 1153.33, NOW
-() + INTERVAL '1 month' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 3, 1153.33, NOW
-() + INTERVAL '2 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 4, 1153.33, NOW
-() + INTERVAL '3 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 5, 1153.33, NOW
-() + INTERVAL '4 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 6, 1153.33, NOW
-() + INTERVAL '5 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 7, 1153.33, NOW
-() + INTERVAL '6 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 8, 1153.33, NOW
-() + INTERVAL '7 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 9, 1153.33, NOW
-() + INTERVAL '8 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 10, 1153.33, NOW
-() + INTERVAL '9 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 11, 1153.33, NOW
-() + INTERVAL '10 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-()),
-(1, 12, 1153.33, NOW
-() + INTERVAL '11 months' + INTERVAL '5 days', NULL, NULL, 0, NOW
-() - INTERVAL '1 month', NOW
-());
+    (1, 1, 1153.33, NOW() + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 2, 1153.33, NOW() + INTERVAL '1 month' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 3, 1153.33, NOW() + INTERVAL '2 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 4, 1153.33, NOW() + INTERVAL '3 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 5, 1153.33, NOW() + INTERVAL '4 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 6, 1153.33, NOW() + INTERVAL '5 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 7, 1153.33, NOW() + INTERVAL '6 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 8, 1153.33, NOW() + INTERVAL '7 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 9, 1153.33, NOW() + INTERVAL '8 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 10, 1153.33, NOW() + INTERVAL '9 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 11, 1153.33, NOW() + INTERVAL '10 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW()),
+    (1, 12, 1153.33, NOW() + INTERVAL '11 months' + INTERVAL '5 days', NULL, NULL, 1, NOW() - INTERVAL '1 month', NOW());
 
 -- Parcelas do Acordo 2 (24 parcelas)
 INSERT INTO "ParcelasAcordo"
     ("AcordoId", "NumeroParcela", "Valor", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (2, 1, 965.00, NOW() + INTERVAL
-'10 days', NULL, NULL, 0, NOW
+'10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 2, 965.00, NOW
-() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 3, 965.00, NOW
-() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 4, 965.00, NOW
-() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 5, 965.00, NOW
-() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 6, 965.00, NOW
-() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 7, 965.00, NOW
-() + INTERVAL '6 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 8, 965.00, NOW
-() + INTERVAL '7 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 9, 965.00, NOW
-() + INTERVAL '8 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 10, 965.00, NOW
-() + INTERVAL '9 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 11, 965.00, NOW
-() + INTERVAL '10 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '10 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 12, 965.00, NOW
-() + INTERVAL '11 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '11 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 13, 965.00, NOW
-() + INTERVAL '12 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '12 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 14, 965.00, NOW
-() + INTERVAL '13 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '13 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 15, 965.00, NOW
-() + INTERVAL '14 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '14 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 16, 965.00, NOW
-() + INTERVAL '15 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '15 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 17, 965.00, NOW
-() + INTERVAL '16 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '16 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 18, 965.00, NOW
-() + INTERVAL '17 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '17 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 19, 965.00, NOW
-() + INTERVAL '18 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '18 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 20, 965.00, NOW
-() + INTERVAL '19 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '19 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 21, 965.00, NOW
-() + INTERVAL '20 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '20 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 22, 965.00, NOW
-() + INTERVAL '21 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '21 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 23, 965.00, NOW
-() + INTERVAL '22 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '22 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (2, 24, 965.00, NOW
-() + INTERVAL '23 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '23 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ());
 
@@ -444,147 +408,147 @@ INSERT INTO "ParcelasAcordo"
     ("AcordoId", "NumeroParcela", "Valor", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (3, 1, 1311.11, NOW() + INTERVAL
-'15 days', NULL, NULL, 0, NOW
+'15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 2, 1311.11, NOW
-() + INTERVAL '1 month' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 3, 1311.11, NOW
-() + INTERVAL '2 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 4, 1311.11, NOW
-() + INTERVAL '3 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 5, 1311.11, NOW
-() + INTERVAL '4 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 6, 1311.11, NOW
-() + INTERVAL '5 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 7, 1311.11, NOW
-() + INTERVAL '6 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 8, 1311.11, NOW
-() + INTERVAL '7 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 9, 1311.11, NOW
-() + INTERVAL '8 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 10, 1311.11, NOW
-() + INTERVAL '9 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 11, 1311.11, NOW
-() + INTERVAL '10 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '10 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 12, 1311.11, NOW
-() + INTERVAL '11 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '11 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 13, 1311.11, NOW
-() + INTERVAL '12 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '12 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 14, 1311.11, NOW
-() + INTERVAL '13 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '13 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 15, 1311.11, NOW
-() + INTERVAL '14 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '14 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 16, 1311.11, NOW
-() + INTERVAL '15 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '15 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 17, 1311.11, NOW
-() + INTERVAL '16 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '16 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 18, 1311.11, NOW
-() + INTERVAL '17 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '17 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 19, 1311.11, NOW
-() + INTERVAL '18 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '18 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 20, 1311.11, NOW
-() + INTERVAL '19 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '19 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 21, 1311.11, NOW
-() + INTERVAL '20 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '20 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 22, 1311.11, NOW
-() + INTERVAL '21 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '21 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 23, 1311.11, NOW
-() + INTERVAL '22 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '22 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 24, 1311.11, NOW
-() + INTERVAL '23 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '23 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 25, 1311.11, NOW
-() + INTERVAL '24 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '24 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 26, 1311.11, NOW
-() + INTERVAL '25 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '25 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 27, 1311.11, NOW
-() + INTERVAL '26 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '26 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 28, 1311.11, NOW
-() + INTERVAL '27 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '27 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 29, 1311.11, NOW
-() + INTERVAL '28 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '28 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 30, 1311.11, NOW
-() + INTERVAL '29 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '29 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 31, 1311.11, NOW
-() + INTERVAL '30 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '30 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 32, 1311.11, NOW
-() + INTERVAL '31 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '31 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 33, 1311.11, NOW
-() + INTERVAL '32 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '32 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 34, 1311.11, NOW
-() + INTERVAL '33 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '33 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 35, 1311.11, NOW
-() + INTERVAL '34 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '34 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ()),
 (3, 36, 1311.11, NOW
-() + INTERVAL '35 months' + INTERVAL '15 days', NULL, NULL, 0, NOW
+() + INTERVAL '35 months' + INTERVAL '15 days', NULL, NULL, 1, NOW
 () - INTERVAL '3 weeks', NOW
 ());
 
@@ -593,43 +557,43 @@ INSERT INTO "ParcelasAcordo"
     ("AcordoId", "NumeroParcela", "Valor", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (4, 1, 788.25, NOW() + INTERVAL
-'7 days', NULL, NULL, 0, NOW
+'7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 2, 788.25, NOW
-() + INTERVAL '1 month' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 3, 788.25, NOW
-() + INTERVAL '2 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 4, 788.25, NOW
-() + INTERVAL '3 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 5, 788.25, NOW
-() + INTERVAL '4 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 6, 788.25, NOW
-() + INTERVAL '5 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 7, 788.25, NOW
-() + INTERVAL '6 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 8, 788.25, NOW
-() + INTERVAL '7 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 9, 788.25, NOW
-() + INTERVAL '8 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (4, 10, 788.25, NOW
-() + INTERVAL '9 months' + INTERVAL '7 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '7 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ());
 
@@ -638,75 +602,75 @@ INSERT INTO "ParcelasAcordo"
     ("AcordoId", "NumeroParcela", "Valor", "DataVencimento", "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (5, 1, 1755.56, NOW() + INTERVAL
-'20 days', NULL, NULL, 0, NOW
+'20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 2, 1755.56, NOW
-() + INTERVAL '1 month' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 3, 1755.56, NOW
-() + INTERVAL '2 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 4, 1755.56, NOW
-() + INTERVAL '3 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 5, 1755.56, NOW
-() + INTERVAL '4 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 6, 1755.56, NOW
-() + INTERVAL '5 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 7, 1755.56, NOW
-() + INTERVAL '6 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 8, 1755.56, NOW
-() + INTERVAL '7 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 9, 1755.56, NOW
-() + INTERVAL '8 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 10, 1755.56, NOW
-() + INTERVAL '9 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 11, 1755.56, NOW
-() + INTERVAL '10 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '10 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 12, 1755.56, NOW
-() + INTERVAL '11 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '11 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 13, 1755.56, NOW
-() + INTERVAL '12 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '12 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 14, 1755.56, NOW
-() + INTERVAL '13 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '13 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 15, 1755.56, NOW
-() + INTERVAL '14 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '14 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 16, 1755.56, NOW
-() + INTERVAL '15 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '15 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 17, 1755.56, NOW
-() + INTERVAL '16 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '16 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ()),
 (5, 18, 1755.56, NOW
-() + INTERVAL '17 months' + INTERVAL '20 days', NULL, NULL, 0, NOW
+() + INTERVAL '17 months' + INTERVAL '20 days', NULL, NULL, 1, NOW
 () - INTERVAL '5 days', NOW
 ());
 
@@ -875,7 +839,7 @@ SELECT
     CASE "Status"
         WHEN 0 THEN 'Ativo'
         WHEN 1 THEN 'Cancelado'
-        WHEN 2 THEN 'ConcluÃƒÂ­do'
+        WHEN 2 THEN 'Concluí­do'
     END AS "Status Acordo",
     COUNT(*) AS "Quantidade"
 FROM "Acordos"
@@ -1128,7 +1092,7 @@ INSERT INTO "ParcelasAcordo"
     "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (6, 1, 755.75, NOW() + INTERVAL
-'8 days', NULL, NULL, 0, NOW
+'8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 2, 755.75, NOW
@@ -1190,7 +1154,7 @@ VALUES
 
 -- ====================================================================
 -- BOLETOS DO ACORDO 6
--- Nota: As ParcelasAcordo IDs começam apÃƒÂ³s as do script principal
+-- Nota: As ParcelasAcordo IDs começam apí³s as do script principal
 --       O script principal tinha 100 ParcelasAcordo, então os novos 
 --       IDs começam em 101
 -- ====================================================================
@@ -1254,7 +1218,7 @@ VALUES
 -- ACORDO PARA O CONTRATO 1 (Acordo ID 7)
 -- ====================================================================
 -- Este acordo é para as 9 parcelas vencidas do contrato original
--- Vamos dar um desconto maior jÃƒÂ¡ que é o contrato mais antigo
+-- Vamos dar um desconto maior jí¡ que é o contrato mais antigo
 
 INSERT INTO "Acordos"
 (
@@ -1300,7 +1264,7 @@ INSERT INTO "ParcelasAcordo"
     "DataPagamento", "ValorPago", "Status", "DataCadastro", "DataAtualizacao")
 VALUES
     (7, 1, 712.24, NOW() + INTERVAL
-'10 days', NULL, NULL, 0, NOW
+'10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 2, 712.24, NOW
@@ -1448,7 +1412,7 @@ ORDER BY co."Id";
 SELECT
     'Acordo ' || a."NumeroAcordo" AS "Acordo",
     'Contrato: ' || co."NumeroContrato" AS "Contrato",
-    'Valor DÃƒÂ­vida: R$ ' || a."ValorTotalDivida" AS "Valor DÃƒÂ­vida",
+    'Valor Dí­vida: R$ ' || a."ValorTotalDivida" AS "Valor Dí­vida",
     'Desconto: R$ ' || a."ValorDesconto" AS "Desconto",
     'Valor Acordo: R$ ' || a."ValorTotalAcordo" AS "Valor Acordo",
     a."QuantidadeParcelas" || 'x de R$ ' || a."ValorParcela" AS "Parcelamento"
@@ -1485,9 +1449,9 @@ FROM "Contratos" co
     LEFT JOIN "Boletos" b ON b."AcordoId" = a."Id"
 WHERE co."ClienteId" = 1;
 
--- Soma das dÃƒÂ­vidas
+-- Soma das dí­vidas
 SELECT
-    'Total em DÃƒÂ­vida: R$ ' || SUM(co."SaldoDevedor") AS "Total DÃƒÂ­vida"
+    'Total em Dí­vida: R$ ' || SUM(co."SaldoDevedor") AS "Total Dí­vida"
 FROM "Contratos" co
 WHERE co."ClienteId" = 1 AND co."Status" IN (0, 1);
 

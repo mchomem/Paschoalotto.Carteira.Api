@@ -1132,59 +1132,59 @@ VALUES
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 2, 755.75, NOW
-() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 3, 755.75, NOW
-() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 4, 755.75, NOW
-() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 5, 755.75, NOW
-() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 6, 755.75, NOW
-() + INTERVAL '5 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 7, 755.75, NOW
-() + INTERVAL '6 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 8, 755.75, NOW
-() + INTERVAL '7 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 9, 755.75, NOW
-() + INTERVAL '8 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 10, 755.75, NOW
-() + INTERVAL '9 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 11, 755.75, NOW
-() + INTERVAL '10 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '10 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 12, 755.75, NOW
-() + INTERVAL '11 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '11 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 13, 755.75, NOW
-() + INTERVAL '12 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '12 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 14, 755.75, NOW
-() + INTERVAL '13 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '13 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ()),
 (6, 15, 755.75, NOW
-() + INTERVAL '14 months' + INTERVAL '8 days', NULL, NULL, 0, NOW
+() + INTERVAL '14 months' + INTERVAL '8 days', NULL, NULL, 1, NOW
 () - INTERVAL '2 weeks', NOW
 ());
 
@@ -1213,7 +1213,7 @@ VALUES
 (6, 101, '000000022-2', '23790.00001 00000.000022 00000.000022 2 00000000000075', 
      '23790000000000000000000000000000000000000022', 755.75, 
      NOW
-() + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '8 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '2 weeks', NOW
 ()),
@@ -1221,7 +1221,7 @@ VALUES
 (6, 102, '000000023-0', '23790.00001 00000.000023 00000.000023 0 00000000000075', 
      '23790000000000000000000000000000000000000023', 755.75, 
      NOW
-() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '1 month' + INTERVAL '8 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '2 weeks', NOW
 ()),
@@ -1229,7 +1229,7 @@ VALUES
 (6, 103, '000000024-9', '23790.00001 00000.000024 00000.000024 9 00000000000075', 
      '23790000000000000000000000000000000000000024', 755.75, 
      NOW
-() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '2 months' + INTERVAL '8 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '2 weeks', NOW
 ()),
@@ -1237,7 +1237,7 @@ VALUES
 (6, 104, '000000025-7', '23790.00001 00000.000025 00000.000025 7 00000000000075', 
      '23790000000000000000000000000000000000000025', 755.75, 
      NOW
-() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '3 months' + INTERVAL '8 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '2 weeks', NOW
 ()),
@@ -1245,7 +1245,7 @@ VALUES
 (6, 105, '000000026-5', '23790.00001 00000.000026 00000.000026 5 00000000000075', 
      '23790000000000000000000000000000000000000026', 755.75, 
      NOW
-() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '4 months' + INTERVAL '8 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '2 weeks', NOW
 ());
@@ -1304,47 +1304,47 @@ VALUES
 () - INTERVAL '1 week', NOW
 ()),
 (7, 2, 712.24, NOW
-() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 3, 712.24, NOW
-() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 4, 712.24, NOW
-() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 5, 712.24, NOW
-() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 6, 712.24, NOW
-() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 7, 712.24, NOW
-() + INTERVAL '6 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '6 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 8, 712.24, NOW
-() + INTERVAL '7 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '7 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 9, 712.24, NOW
-() + INTERVAL '8 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '8 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 10, 712.24, NOW
-() + INTERVAL '9 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '9 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 11, 712.24, NOW
-() + INTERVAL '10 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '10 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ()),
 (7, 12, 712.24, NOW
-() + INTERVAL '11 months' + INTERVAL '10 days', NULL, NULL, 0, NOW
+() + INTERVAL '11 months' + INTERVAL '10 days', NULL, NULL, 1, NOW
 () - INTERVAL '1 week', NOW
 ());
 
@@ -1372,7 +1372,7 @@ VALUES
 (7, 116, '000000028-1', '23790.00001 00000.000028 00000.000028 1 00000000000071', 
      '23790000000000000000000000000000000000000028', 712.24, 
      NOW
-() + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ()),
@@ -1380,7 +1380,7 @@ VALUES
 (7, 117, '000000029-0', '23790.00001 00000.000029 00000.000029 0 00000000000071', 
      '23790000000000000000000000000000000000000029', 712.24, 
      NOW
-() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '1 month' + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ()),
@@ -1388,7 +1388,7 @@ VALUES
 (7, 118, '000000030-3', '23790.00001 00000.000030 00000.000030 3 00000000000071', 
      '23790000000000000000000000000000000000000030', 712.24, 
      NOW
-() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '2 months' + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ()),
@@ -1396,7 +1396,7 @@ VALUES
 (7, 119, '000000031-1', '23790.00001 00000.000031 00000.000031 1 00000000000071', 
      '23790000000000000000000000000000000000000031', 712.24, 
      NOW
-() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '3 months' + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ()),
@@ -1404,7 +1404,7 @@ VALUES
 (7, 120, '000000032-0', '23790.00001 00000.000032 00000.000032 0 00000000000071', 
      '23790000000000000000000000000000000000000032', 712.24, 
      NOW
-() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '4 months' + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ()),
@@ -1412,7 +1412,7 @@ VALUES
 (7, 121, '000000033-8', '23790.00001 00000.000033 00000.000033 8 00000000000071', 
      '23790000000000000000000000000000000000000033', 712.24, 
      NOW
-() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 0, NULL, 
+() + INTERVAL '5 months' + INTERVAL '10 days', NULL, NULL, 1, NULL, 
      NOW
 () - INTERVAL '1 week', NOW
 ());

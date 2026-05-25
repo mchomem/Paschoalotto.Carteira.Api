@@ -48,40 +48,40 @@ ALTER SEQUENCE "Boletos_Id_seq" RESTART WITH 1;
 INSERT INTO "Clientes"
     ("TipoPessoa", "Nome", "Documento", "Email", "Telefone", "Endereco", "Cidade", "Estado", "Cep", "DataCadastro", "Ativo")
 VALUES
-    (0, 'João da Silva Santos', '123.456.789-01', 'joao.silva@email.com', '(11) 98765-4321', 'Rua das Flores, 123', 'São Paulo', 'SP', '01234-567', NOW() - INTERVAL
+    (0, 'João da Silva Santos', '12345678901', 'joao.silva@email.com', '(11) 98765-4321', 'Rua das Flores, 123', 'São Paulo', 'SP', '01234-567', NOW() - INTERVAL
 '2 years', true),
-(0, 'Maria Oliveira Costa', '234.567.890-12', 'maria.oliveira@email.com', '(21) 99876-5432', 'Av. Paulista, 1500', 'Rio de Janeiro', 'RJ', '20040-020', NOW
+(0, 'Maria Oliveira Costa', '23456789012', 'maria.oliveira@email.com', '(21) 99876-5432', 'Av. Paulista, 1500', 'Rio de Janeiro', 'RJ', '20040-020', NOW
 () - INTERVAL '1 year 6 months', true),
-(0, 'Pedro Henrique Lima', '345.678.901-23', 'pedro.lima@email.com', '(31) 98765-1234', 'Rua Bahia, 456', 'Belo Horizonte', 'MG', '30160-011', NOW
+(0, 'Pedro Henrique Lima', '34567890123', 'pedro.lima@email.com', '(31) 98765-1234', 'Rua Bahia, 456', 'Belo Horizonte', 'MG', '30160-011', NOW
 () - INTERVAL '1 year 3 months', true),
-(0, 'Ana Paula Ferreira', '456.789.012-34', 'ana.ferreira@email.com', '(41) 97654-3210', 'Rua XV de Novembro, 789', 'Curitiba', 'PR', '80020-310', NOW
+(0, 'Ana Paula Ferreira', '45678901234', 'ana.ferreira@email.com', '(41) 97654-3210', 'Rua XV de Novembro, 789', 'Curitiba', 'PR', '80020-310', NOW
 () - INTERVAL '1 year', true),
-(0, 'Carlos Eduardo Souza', '567.890.123-45', 'carlos.souza@email.com', '(51) 96543-2109', 'Av. Ipiranga, 321', 'Porto Alegre', 'RS', '90160-093', NOW
+(0, 'Carlos Eduardo Souza', '56789012345', 'carlos.souza@email.com', '(51) 96543-2109', 'Av. Ipiranga, 321', 'Porto Alegre', 'RS', '90160-093', NOW
 () - INTERVAL '10 months', true),
-(0, 'Fernanda Rodrigues Alves', '678.901.234-56', 'fernanda.alves@email.com', '(85) 95432-1098', 'Rua Major Facundo, 654', 'Fortaleza', 'CE', '60025-100', NOW
+(0, 'Fernanda Rodrigues Alves', '67890123456', 'fernanda.alves@email.com', '(85) 95432-1098', 'Rua Major Facundo, 654', 'Fortaleza', 'CE', '60025-100', NOW
 () - INTERVAL '8 months', true),
-(0, 'Ricardo Pereira Martins', '789.012.345-67', 'ricardo.martins@email.com', '(71) 94321-0987', 'Av. Sete de Setembro, 987', 'Salvador', 'BA', '40060-001', NOW
+(0, 'Ricardo Pereira Martins', '78901234567', 'ricardo.martins@email.com', '(71) 94321-0987', 'Av. Sete de Setembro, 987', 'Salvador', 'BA', '40060-001', NOW
 () - INTERVAL '6 months', true),
-(0, 'Juliana Santos Oliveira', '890.123.456-78', 'juliana.santos@email.com', '(81) 93210-9876', 'Rua do Imperador, 147', 'Recife', 'PE', '50010-240', NOW
+(0, 'Juliana Santos Oliveira', '89012345678', 'juliana.santos@email.com', '(81) 93210-9876', 'Rua do Imperador, 147', 'Recife', 'PE', '50010-240', NOW
 () - INTERVAL '5 months', true),
-(0, 'Bruno Costa Mendes', '901.234.567-89', 'bruno.mendes@email.com', '(61) 92109-8765', 'SQN 304 Bloco A', 'Brasília', 'DF', '70736-010', NOW
+(0, 'Bruno Costa Mendes', '90123456789', 'bruno.mendes@email.com', '(61) 92109-8765', 'SQN 304 Bloco A', 'Brasília', 'DF', '70736-010', NOW
 () - INTERVAL '4 months', true),
-(0, 'Camila Rocha Silva', '012.345.678-90', 'camila.silva@email.com', '(62) 91098-7654', 'Rua T-27, 258', 'Goiânia', 'GO', '74223-060', NOW
+(0, 'Camila Rocha Silva', '01234567890', 'camila.silva@email.com', '(62) 91098-7654', 'Rua T-27, 258', 'Goiânia', 'GO', '74223-060', NOW
 () - INTERVAL '3 months', true);
 
 -- Pessoas Jurídicas (TipoPessoa = 1)
 INSERT INTO "Clientes"
     ("TipoPessoa", "Nome", "Documento", "Email", "Telefone", "Endereco", "Cidade", "Estado", "Cep", "DataCadastro", "Ativo")
 VALUES
-    (1, 'TechStart Tecnologia Ltda', '12.345.678/0001-90', 'contato@techstart.com.br', '(11) 3456-7890', 'Av. Faria Lima, 1500', 'São Paulo', 'SP', '01451-001', NOW() - INTERVAL
+    (1, 'TechStart Tecnologia Ltda', '12345678000190', 'contato@techstart.com.br', '(11) 3456-7890', 'Av. Faria Lima, 1500', 'São Paulo', 'SP', '01451-001', NOW() - INTERVAL
 '3 years', true),
-(1, 'Comercial Silva & Cia', '23.456.789/0001-01', 'financeiro@silvaecia.com.br', '(21) 2234-5678', 'Rua do Comércio, 789', 'Rio de Janeiro', 'RJ', '20031-040', NOW
+(1, 'Comercial Silva & Cia', '23456789000101', 'financeiro@silvaecia.com.br', '(21) 2234-5678', 'Rua do Comércio, 789', 'Rio de Janeiro', 'RJ', '20031-040', NOW
 () - INTERVAL '2 years 6 months', true),
-(1, 'Indústria MG Peças Ltda', '34.567.890/0001-12', 'cobranca@mgpecas.com.br', '(31) 3345-6789', 'Av. Cristiano Machado, 2500', 'Belo Horizonte', 'MG', '31160-900', NOW
+(1, 'Indústria MG Peças Ltda', '34567890000112', 'cobranca@mgpecas.com.br', '(31) 3345-6789', 'Av. Cristiano Machado, 2500', 'Belo Horizonte', 'MG', '31160-900', NOW
 () - INTERVAL '2 years', true),
-(1, 'Restaurante Sabor & Arte', '45.678.901/0001-23', 'admin@saborarte.com.br', '(41) 3456-7890', 'Rua 24 Horas, 321', 'Curitiba', 'PR', '80050-000', NOW
+(1, 'Restaurante Sabor & Arte', '45678901000123', 'admin@saborarte.com.br', '(41) 3456-7890', 'Rua 24 Horas, 321', 'Curitiba', 'PR', '80050-000', NOW
 () - INTERVAL '1 year 9 months', true),
-(1, 'Construtora Alicerce S/A', '56.789.012/0001-34', 'contabilidade@alicerce.com.br', '(51) 3567-8901', 'Av. Assis Brasil, 4500', 'Porto Alegre', 'RS', '91010-001', NOW
+(1, 'Construtora Alicerce S/A', '56789012000134', 'contabilidade@alicerce.com.br', '(51) 3567-8901', 'Av. Assis Brasil, 4500', 'Porto Alegre', 'RS', '91010-001', NOW
 () - INTERVAL '1 year 6 months', true);
 
 -- ====================================================================

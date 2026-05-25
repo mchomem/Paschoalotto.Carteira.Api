@@ -234,7 +234,7 @@ public class BoletoService : IBoletoService
                         col.Item().Row(row =>
                         {
                             row.RelativeItem().Text($"Nome: {cliente.Nome}");
-                            row.RelativeItem().Text($"Documento: {cliente.Documento}");
+                            row.RelativeItem().Text(FormatarDocumentoComLabel(cliente.Documento));
                         });
 
                         if (!string.IsNullOrEmpty(cliente.Endereco))
@@ -422,6 +422,31 @@ public class BoletoService : IBoletoService
         using var image = SKImage.FromBitmap(bitmap);
         using var data = image.Encode(SKEncodedImageFormat.Png, 100);
         return data.ToArray();
+    }
+
+    private string FormatarDocumentoComLabel(string documento)
+    {
+        if (string.IsNullOrWhiteSpace(documento))
+            return "Documento: Não informado";
+
+        // Remover caracteres não numéricos
+        var apenasNumeros = new string(documento.Where(char.IsDigit).ToArray());
+
+        if (apenasNumeros.Length == 11)
+        {
+            // CPF: 000.000.000-00
+            return $"CPF: {apenasNumeros.Substring(0, 3)}.{apenasNumeros.Substring(3, 3)}.{apenasNumeros.Substring(6, 3)}-{apenasNumeros.Substring(9, 2)}";
+        }
+        else if (apenasNumeros.Length == 14)
+        {
+            // CNPJ: 00.000.000/0000-00
+            return $"CNPJ: {apenasNumeros.Substring(0, 2)}.{apenasNumeros.Substring(2, 3)}.{apenasNumeros.Substring(5, 3)}/{apenasNumeros.Substring(8, 4)}-{apenasNumeros.Substring(12, 2)}";
+        }
+        else
+        {
+            // Documento em formato não reconhecido
+            return $"Documento: {documento}";
+        }
     }
 
     private BoletoResponseDto MapToResponseDto(Boleto boleto, ParcelaAcordo? parcelaAcordo = null)

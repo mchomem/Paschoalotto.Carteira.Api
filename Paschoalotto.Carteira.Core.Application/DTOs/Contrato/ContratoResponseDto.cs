@@ -19,4 +19,5 @@ public class ContratoResponseDto
     public string StatusDescricao { get; set; } = string.Empty;
     public string? Observacoes { get; set; }
     public DateTime DataCadastro { get; set; }
+    public TipoCredito TipoCredito { get; set; }
 }

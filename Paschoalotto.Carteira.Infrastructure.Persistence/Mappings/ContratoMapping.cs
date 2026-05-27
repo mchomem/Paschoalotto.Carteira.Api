@@ -58,6 +58,11 @@ public class ContratoMapping : IEntityTypeConfiguration<Contrato>
 
         builder.Property(c => c.DataAtualizacao);
 
+        builder.Property(c => c.TipoCredito)
+            .IsRequired()
+            .HasConversion<int>()
+            .HasDefaultValueSql("99");
+
         // Relacionamentos
         builder.HasOne(c => c.Cliente)
             .WithMany(cl => cl.Contratos)

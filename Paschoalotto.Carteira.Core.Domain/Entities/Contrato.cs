@@ -18,6 +18,7 @@ public class Contrato
     public string? Observacoes { get; set; }
     public DateTime DataCadastro { get; set; }
     public DateTime? DataAtualizacao { get; set; }
+    public TipoCredito TipoCredito { get; set; }
 
     // Relacionamentos
     public Cliente Cliente { get; set; } = null!;

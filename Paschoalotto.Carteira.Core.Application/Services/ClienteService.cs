@@ -220,7 +220,8 @@ public class ClienteService : IClienteService
             Status = contrato.Status,
             StatusDescricao = contrato.Status.ToString(),
             Observacoes = contrato.Observacoes,
-            DataCadastro = contrato.DataCadastro
+            DataCadastro = contrato.DataCadastro,
+            TipoCredito = contrato.TipoCredito
         };
     }
 

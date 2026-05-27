@@ -1,4 +1,4 @@
-﻿-- ====================================================================
+-- ====================================================================
 -- Script de Carga Completa - Paschoalotto Carteira API
 -- ====================================================================
 -- Descrição: Script unificado com todos os dados de teste
@@ -90,66 +90,66 @@ VALUES
 
 -- Contratos em Aberto (Status = 0)
 INSERT INTO "Contratos"
-    ("ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor", "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria", "DataContrato", "DataVencimento", "Status", "Observacoes", "DataCadastro", "DataAtualizacao")
+    ("ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor", "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria", "DataContrato", "DataVencimento", "Status", "Observacoes", "DataCadastro", "DataAtualizacao", "TipoCredito")
 VALUES
     (1, 'CTR-2023-000001', 15000.00, 18500.00, 2.50, 2.00, 0.50, NOW() - INTERVAL
 '18 months', NOW
 () - INTERVAL '6 months', 0, 'Contrato de empréstimo pessoal vencido há 6 meses', NOW
 () - INTERVAL '18 months', NOW
-() - INTERVAL '1 day'),
+() - INTERVAL '1 day', 2),
 (2, 'CTR-2023-000002', 25000.00, 28750.00, 2.00, 2.00, 0.40, NOW
 () - INTERVAL '16 months', NOW
 () - INTERVAL '4 months', 0, 'Financiamento de veí­culo em atraso', NOW
 () - INTERVAL '16 months', NOW
-() - INTERVAL '2 days'),
+() - INTERVAL '2 days', 4),
 (3, 'CTR-2023-000003', 8500.00, 9200.00, 3.00, 2.00, 0.60, NOW
 () - INTERVAL '14 months', NOW
 () - INTERVAL '2 months', 0, 'Empréstimo consignado atrasado', NOW
 () - INTERVAL '14 months', NOW
-() - INTERVAL '1 week'),
+() - INTERVAL '1 week', 2),
 (4, 'CTR-2024-000004', 12000.00, 12850.00, 2.75, 2.00, 0.50, NOW
 () - INTERVAL '12 months', NOW
 () - INTERVAL '1 month', 0, 'Crédito pessoal com pequeno atraso', NOW
 () - INTERVAL '12 months', NOW
-() - INTERVAL '5 days'),
+() - INTERVAL '5 days', 2),
 (5, 'CTR-2024-000005', 50000.00, 57500.00, 1.50, 2.00, 0.30, NOW
 () - INTERVAL '20 months', NOW
 () - INTERVAL '8 months', 0, 'Empréstimo empresarial em mora', NOW
 () - INTERVAL '20 months', NOW
-() - INTERVAL '3 days');
+() - INTERVAL '3 days', 2);
 
--- Contratos Em Acordo (Status = 1)
+-- Contratos Em Acordo
 INSERT INTO "Contratos"
-    ("ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor", "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria", "DataContrato", "DataVencimento", "Status", "Observacoes", "DataCadastro", "DataAtualizacao")
+    ("ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor", "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria", "DataContrato", "DataVencimento", "Status", "Observacoes", "DataCadastro", "DataAtualizacao", "TipoCredito")
 VALUES
     (6, 'CTR-2023-000011', 18000.00, 19800.00, 2.60, 2.00, 0.55, NOW() - INTERVAL
 '17 months', NOW
 () - INTERVAL '5 months', 1, 'Acordo de renegociação ativo', NOW
 () - INTERVAL '17 months', NOW
-() - INTERVAL '1 month'),
+() - INTERVAL '1 month', 1),
 (7, 'CTR-2024-000017', 32000.00, 35200.00, 2.10, 2.00, 0.42, NOW
 () - INTERVAL '19 months', NOW
 () - INTERVAL '7 months', 1, 'Em processo de negociação', NOW
 () - INTERVAL '19 months', NOW
-() - INTERVAL '2 weeks'),
+() - INTERVAL '2 weeks', 8),
 (13, 'CTR-2023-000013', 65000.00, 71500.00, 1.70, 2.00, 0.38, NOW
 () - INTERVAL '21 months', NOW
 () - INTERVAL '9 months', 1, 'Acordo empresarial vigente', NOW
 () - INTERVAL '21 months', NOW
-() - INTERVAL '3 weeks'),
+() - INTERVAL '3 weeks', 8),
 (8, 'CTR-2024-000014', 9500.00, 10450.00, 2.90, 2.00, 0.58, NOW
 () - INTERVAL '11 months', NOW
 () - INTERVAL '1 month', 1, 'Renegociação recente', NOW
 () - INTERVAL '11 months', NOW
-() - INTERVAL '1 week'),
+() - INTERVAL '1 week', 3),
 (15, 'CTR-2024-000015', 45000.00, 49500.00, 1.90, 2.00, 0.43, NOW
 () - INTERVAL '16 months', NOW
 () - INTERVAL '4 months', 1, 'Acordo de parcelamento ativo', NOW
 () - INTERVAL '16 months', NOW
-() - INTERVAL '5 days');
+() - INTERVAL '5 days', 4);
 
 -- ====================================================================
--- PARCELAS (gerando múltiplas parcelas por contrato)
+-- PARCELAS
 -- ====================================================================
 
 -- Parcelas do Contrato 1 (12 parcelas - ví¡rias vencidas)
@@ -913,7 +913,7 @@ INSERT INTO "Contratos"
     ("Id", "ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor",
     "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria",
     "DataContrato", "DataVencimento", "Status", "Observacoes",
-    "DataCadastro", "DataAtualizacao")
+    "DataCadastro", "DataAtualizacao", "TipoCredito")
 VALUES
     (18, 1, 'CTR-2024-000018', 22000.00, 24200.00, 2.30, 2.00, 0.48,
         NOW() - INTERVAL
@@ -922,14 +922,14 @@ VALUES
      'Contrato de financiamento com acordo ativo', 
      NOW
 () - INTERVAL '15 months', NOW
-() - INTERVAL '2 weeks');
+() - INTERVAL '2 weeks', 4);
 
--- Contrato 3: Aberto (Status = 0) - sem acordo ainda
+-- Contrato 3: Aberto
 INSERT INTO "Contratos"
     ("Id", "ClienteId", "NumeroContrato", "ValorOriginal", "SaldoDevedor",
     "TaxaJurosMensal", "TaxaMulta", "TaxaCorrecaoMonetaria",
     "DataContrato", "DataVencimento", "Status", "Observacoes",
-    "DataCadastro", "DataAtualizacao")
+    "DataCadastro", "DataAtualizacao", "TipoCredito")
 VALUES
     (19, 1, 'CTR-2024-000019', 6500.00, 7150.00, 2.80, 2.00, 0.55,
         NOW() - INTERVAL
@@ -938,11 +938,11 @@ VALUES
      'Empréstimo pessoal em atraso - disponével para negociação', 
      NOW
 () - INTERVAL '10 months', NOW
-() - INTERVAL '1 week');
+() - INTERVAL '1 week', 2);
 
 -- ====================================================================
 
--- Atualizar sequÃªncia de Contratos para continuar do ID 20
+-- Atualizar sequência de Contratos para continuar do ID 20
 SELECT setval('"Contratos_Id_seq"', 19, true);
 
 -- PARCELAS DO CONTRATO 18 (8 parcelas)

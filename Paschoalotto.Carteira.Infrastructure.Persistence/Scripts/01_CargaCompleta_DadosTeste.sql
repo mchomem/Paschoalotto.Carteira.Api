@@ -1,4 +1,4 @@
--- ====================================================================
+﻿-- ====================================================================
 -- Script de Carga Completa - Paschoalotto Carteira API
 -- ====================================================================
 -- Descrição: Script unificado com todos os dados de teste
@@ -1525,6 +1525,172 @@ FROM "Contratos" c
     LEFT JOIN "Parcelas" p ON p."ContratoId" = c."Id"
 WHERE c."Id" = 1
 GROUP BY c."Id", c."NumeroContrato", c."Status";
+
+
+
+-- MAIS CONTRATOS PARA O CLIENTE 1
+insert into public."Contratos"
+(
+     "ClienteId"
+    ,  "NumeroContrato"
+    ,  "ValorOriginal"
+    ,  "SaldoDevedor"
+    ,  "TaxaJurosMensal"
+    ,  "TaxaMulta"
+    ,  "TaxaCorrecaoMonetaria"
+    ,  "DataContrato"
+    ,  "DataVencimento"
+    ,  "Status"
+    ,  "Observacoes"
+    ,  "DataCadastro"
+    ,  "DataAtualizacao"
+    ,  "TipoCredito"
+)
+values
+(
+    1
+    , 'CTR-2020-000006'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'NFE 12309 em aberto.'
+    , now()
+    , now()
+    , 1
+),
+(
+    1
+    , 'CTR-2021-000007'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Fatura de cartão de crétido inadimplente 2021'
+    , now()
+    , now()
+    , 3
+),
+(
+    1
+    , 'CTR-2021-000008'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'NFSE 0091234 com pagamento não efetuado.'
+    , now()
+    , now()
+    , 5
+),
+(
+    1
+    , 'CTR-2021-000009'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Aluguel em atraso a vários meses.'
+    , now()
+    , now()
+    , 6
+),
+(
+    1
+    , 'CTR-2021-000010'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Cheque sem fundo não honrado.'
+    , now()
+    , now()
+    , 7
+),
+(
+    1
+    , 'CTR-2025-000011'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Quebra de contrato comercial, valores sem pagamento'
+    , now()
+    , now()
+    , 8
+),
+(
+    1
+    , 'CTR-2025-000012'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Duplicata em aberto'
+    , now()
+    , now()
+    , 9
+),
+(
+    1
+    , 'CTR-2025-000013'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Mensalidade não paga'
+    , now()
+    , now()
+    , 10
+),
+(
+    1
+    , 'CTR-2026-000014'
+    , 1050.55
+    , 1326.75
+    , 2.5
+    , 2
+    , 0.5
+    , now() - interval '20 months'
+    , now() - interval '19 months'
+    , 0
+    , 'Contrato familiar não honrado.'
+    , now()
+    , now()
+    , 99
+);
 
 -- ====================================================================
 -- FIM DO SCRIPT

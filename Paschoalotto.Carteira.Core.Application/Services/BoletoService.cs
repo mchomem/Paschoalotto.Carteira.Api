@@ -215,8 +215,15 @@ public class BoletoService : IBoletoService
                 page.DefaultTextStyle(x => x.FontSize(10));
 
                 page.Header()
-                    .Text("BANCO PASCHOALOTTO")
-                    .SemiBold().FontSize(16).FontColor(Colors.Blue.Darken3);
+                    .Column(col =>
+                    {
+                        // Logo do banco
+                        var logoBytes = CarregarLogoBanco();
+                        if (logoBytes != null)
+                        {
+                            col.Item().Width(150).Height(60).Image(logoBytes).FitArea();
+                        }
+                    });
 
                 page.Content()
                     .PaddingVertical(1, Unit.Centimetre)
@@ -468,5 +475,31 @@ public class BoletoService : IBoletoService
             StatusDescricao = boleto.Status.ToString(),
             DataEmissao = boleto.DataEmissao
         };
+    }
+
+    /// <summary>
+    /// Carrega o logo do banco a partir de um arquivo.
+    /// Retorna null se o logo não for encontrado.
+    /// </summary>
+    private byte[]? CarregarLogoBanco()
+    {
+        try
+        {
+            // Caminho para o logo no diretório Assets/Images/Logo
+            var caminhoLogo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Assets", "Images", "Logo", "logo-np.png");
+
+            if (File.Exists(caminhoLogo))
+            {
+                return File.ReadAllBytes(caminhoLogo);
+            }
+
+            // Se não encontrar, retorna null para não quebrar o boleto
+            return null;
+        }
+        catch (Exception)
+        {
+            // Em caso de erro, retorna null
+            return null;
+        }
     }
 }

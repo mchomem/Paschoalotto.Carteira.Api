@@ -1,9 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
-using Paschoalotto.Carteira.Api.Responses;
-using Paschoalotto.Carteira.Core.Application.DTOs.ParcelaAcordo;
-using Paschoalotto.Carteira.Core.Application.Interfaces;
-
-namespace Paschoalotto.Carteira.Api.Controllers;
+﻿namespace Paschoalotto.Carteira.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

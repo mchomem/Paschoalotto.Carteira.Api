@@ -1,6 +1,4 @@
-﻿using Paschoalotto.Carteira.Core.Domain.Exceptions.Base;
-
-namespace Paschoalotto.Carteira.Core.Domain.Exceptions.Acordo;
+﻿namespace Paschoalotto.Carteira.Core.Domain.Exceptions.Acordo;
 
 public class AcordoInvalidOperationException : Base.InvalidOperationException
 {

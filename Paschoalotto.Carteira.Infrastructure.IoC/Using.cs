@@ -1,0 +1,12 @@
+﻿global using Microsoft.AspNetCore.Authentication.JwtBearer;
+global using Microsoft.EntityFrameworkCore;
+global using Microsoft.Extensions.Configuration;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.IdentityModel.Tokens;
+global using Microsoft.OpenApi.Models;
+global using Paschoalotto.Carteira.Core.Application.Interfaces;
+global using Paschoalotto.Carteira.Core.Application.Services;
+global using Paschoalotto.Carteira.Core.Domain.Interfaces;
+global using Paschoalotto.Carteira.Infrastructure.Persistence.Contexts;
+global using Paschoalotto.Carteira.Infrastructure.Persistence.Repositories;
+global using System.Text;

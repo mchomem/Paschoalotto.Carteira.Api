@@ -1,16 +1,4 @@
-﻿using Paschoalotto.Carteira.Core.Application.DTOs.Boleto;
-using Paschoalotto.Carteira.Core.Application.Interfaces;
-using Paschoalotto.Carteira.Core.Domain.Entities;
-using Paschoalotto.Carteira.Core.Domain.Enums;
-using Paschoalotto.Carteira.Core.Domain.Exceptions.Acordo;
-using Paschoalotto.Carteira.Core.Domain.Exceptions.Boleto;
-using Paschoalotto.Carteira.Core.Domain.Interfaces;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
-using SkiaSharp;
-
-namespace Paschoalotto.Carteira.Core.Application.Services;
+﻿namespace Paschoalotto.Carteira.Core.Application.Services;
 
 public class BoletoService : IBoletoService
 {

@@ -1,12 +1,4 @@
-﻿using Mapster;
-using Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
-using Paschoalotto.Carteira.Core.Application.Interfaces;
-using Paschoalotto.Carteira.Core.Domain.Entities;
-using Paschoalotto.Carteira.Core.Domain.Enums;
-using Paschoalotto.Carteira.Core.Domain.Exceptions.Cliente;
-using Paschoalotto.Carteira.Core.Domain.Interfaces;
-
-namespace Paschoalotto.Carteira.Core.Application.Services;
+﻿namespace Paschoalotto.Carteira.Core.Application.Services;
 
 public class ClienteService : IClienteService
 {
@@ -16,6 +8,7 @@ public class ClienteService : IClienteService
     private readonly IAcordoRepository _acordoRepository;
     private readonly IParcelaAcordoRepository _parcelaAcordoRepository;
     private readonly IBoletoRepository _boletoRepository;
+    private readonly IDocumentoService _documentoService;
 
     public ClienteService(
         IClienteRepository clienteRepository,
@@ -23,7 +16,8 @@ public class ClienteService : IClienteService
         IParcelaRepository parcelaRepository,
         IAcordoRepository acordoRepository,
         IParcelaAcordoRepository parcelaAcordoRepository,
-        IBoletoRepository boletoRepository)
+        IBoletoRepository boletoRepository,
+        IDocumentoService documentoService)
     {
         _clienteRepository = clienteRepository;
         _contratoRepository = contratoRepository;
@@ -31,10 +25,13 @@ public class ClienteService : IClienteService
         _acordoRepository = acordoRepository;
         _parcelaAcordoRepository = parcelaAcordoRepository;
         _boletoRepository = boletoRepository;
+        _documentoService = documentoService;
     }
 
     public async Task<ClienteResponseDto> CreateAsync(ClienteRequestDto request)
     {
+        _documentoService.ValidarDocumento(request.Documento);
+        
         // Validar se documento já existe
         if (await _clienteRepository.ExistsByDocumentoAsync(request.Documento))
             throw new ClienteAlreadyExistsException(request.Documento);
@@ -80,12 +77,16 @@ public class ClienteService : IClienteService
 
     public async Task<ClienteResponseDto?> GetByDocumentoAsync(string documento)
     {
+        _documentoService.ValidarDocumento(documento);
+
         var cliente = await _clienteRepository.GetByDocumentoAsync(documento);
         return cliente != null ? MapToResponseDto(cliente) : null;
     }
 
     public async Task<ClienteDashboardDto?> GetDashboardByDocumentoAsync(string documento)
     {
+        _documentoService.ValidarDocumento(documento);
+
         var cliente = await _clienteRepository.GetByDocumentoAsync(documento);
         if (cliente == null)
             return null;
@@ -306,4 +307,3 @@ public class ClienteService : IClienteService
         };
     }
 }
-

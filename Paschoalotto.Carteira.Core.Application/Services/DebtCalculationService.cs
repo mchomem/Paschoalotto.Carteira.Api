@@ -1,10 +1,4 @@
-﻿using Paschoalotto.Carteira.Core.Application.DTOs.Calculo;
-using Paschoalotto.Carteira.Core.Application.Interfaces;
-using Paschoalotto.Carteira.Core.Domain.Enums;
-using Paschoalotto.Carteira.Core.Domain.Exceptions.Contrato;
-using Paschoalotto.Carteira.Core.Domain.Interfaces;
-
-namespace Paschoalotto.Carteira.Core.Application.Services;
+﻿namespace Paschoalotto.Carteira.Core.Application.Services;
 
 public class DebtCalculationService : IDebtCalculationService
 {

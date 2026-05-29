@@ -1,17 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using Paschoalotto.Carteira.Core.Application.Interfaces;
-using Paschoalotto.Carteira.Core.Application.Services;
-using Paschoalotto.Carteira.Core.Domain.Interfaces;
-using Paschoalotto.Carteira.Infrastructure.Persistence.Contexts;
-using Paschoalotto.Carteira.Infrastructure.Persistence.Repositories;
-using System.Text;
-
-namespace Paschoalotto.Carteira.Infrastructure.IoC;
+﻿namespace Paschoalotto.Carteira.Infrastructure.IoC;
 
 public static class DependencyInjection
 {
@@ -44,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IAgreementService, AgreementService>();
         services.AddScoped<IParcelaAcordoService, ParcelaAcordoService>();
         services.AddScoped<IBoletoService, BoletoService>();
+        services.AddScoped<IDocumentoService, DocumentoService>();
 
         #endregion
 

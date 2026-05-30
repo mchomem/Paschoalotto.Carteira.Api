@@ -31,7 +31,7 @@ public class ClienteService : IClienteService
     public async Task<ClienteResponseDto> CreateAsync(ClienteRequestDto request)
     {
         _documentoService.ValidarDocumento(request.Documento);
-        
+
         // Validar se documento já existe
         if (await _clienteRepository.ExistsByDocumentoAsync(request.Documento))
             throw new ClienteAlreadyExistsException(request.Documento);
@@ -69,31 +69,39 @@ public class ClienteService : IClienteService
         return MapToResponseDto(clienteAtualizado);
     }
 
-    public async Task<ClienteResponseDto?> GetByIdAsync(int id)
+    public async Task<ClienteResponseDto> GetByIdAsync(int id)
     {
         var cliente = await _clienteRepository.GetByIdAsync(id);
-        return cliente != null ? MapToResponseDto(cliente) : null;
+
+        if (cliente is null)
+            throw new ClienteNotFoundException(id);
+
+        return MapToResponseDto(cliente);
     }
 
-    public async Task<ClienteResponseDto?> GetByDocumentoAsync(string documento)
+    public async Task<ClienteResponseDto> GetByDocumentoAsync(string documento)
     {
         _documentoService.ValidarDocumento(documento);
 
         var cliente = await _clienteRepository.GetByDocumentoAsync(documento);
-        return cliente != null ? MapToResponseDto(cliente) : null;
+
+        if (cliente is null)
+            throw new ClienteNotFoundException(documento);
+
+        return MapToResponseDto(cliente);
     }
 
-    public async Task<ClienteDashboardDto?> GetDashboardByDocumentoAsync(string documento)
+    public async Task<ClienteDashboardDto> GetDashboardByDocumentoAsync(string documento)
     {
         _documentoService.ValidarDocumento(documento);
 
         var cliente = await _clienteRepository.GetByDocumentoAsync(documento);
-        if (cliente == null)
-            return null;
+        if (cliente is null)
+            throw new ClienteNotFoundException(documento);
 
         var contratos = await _contratoRepository.GetByClienteIdAsync(cliente.Id);
         var contratosDashboard = new List<ContratoDashboardDto>();
-        
+
         // Listas consolidadas para o dashboard
         var todasParcelas = new List<Parcela>();
         var todosAcordos = new List<Acordo>();
@@ -111,18 +119,18 @@ public class ClienteService : IClienteService
             if (acordoAtivo != null)
             {
                 todosAcordos.Add(acordoAtivo);
-                
+
                 // Buscar parcelas do acordo
                 var parcelasAcordo = await _parcelaAcordoRepository.GetByAcordoIdAsync(acordoAtivo.Id);
                 todasParcelasAcordo.AddRange(parcelasAcordo);
-                
+
                 // Buscar boletos do acordo
                 var boletosAcordo = await _boletoRepository.GetByAcordoIdAsync(acordoAtivo.Id);
                 todosBoletos.AddRange(boletosAcordo);
             }
 
             // Buscar boletos pendentes do acordo para o contrato específico
-            var boletosPendentes = acordoAtivo != null 
+            var boletosPendentes = acordoAtivo != null
                 ? (await _boletoRepository.GetByAcordoIdAsync(acordoAtivo.Id))
                     .Where(b => b.Status == StatusBoleto.Pendente).ToList()
                 : new List<Boleto>();
@@ -151,8 +159,7 @@ public class ClienteService : IClienteService
             Cliente = MapToResponseDto(cliente),
             Contratos = contratosDashboard,
             Parcelas = todasParcelas.Select(MapParcelaToResponseDto).ToList(),
-            Acordos = todosAcordos.Select(a => MapAcordoToResponseDto(a, 
-                contratos.First(c => c.Id == a.ContratoId), cliente)).ToList(),
+            Acordos = todosAcordos.Select(a => MapAcordoToResponseDto(a, contratos.First(c => c.Id == a.ContratoId), cliente)).ToList(),
             ParcelasAcordo = todasParcelasAcordo.Select(MapParcelaAcordoToResponseDto).ToList(),
             Boletos = todosBoletos.Select(MapBoletoToResponseDto).ToList(),
             TotalDivida = totalDivida,

@@ -1,5 +1,6 @@
 ﻿namespace Paschoalotto.Carteira.Api.Controllers;
 
+[Authorize]
 [ApiController]
 [Route("api/[controller]")]
 public class AcordoController : ControllerBase

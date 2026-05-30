@@ -25,6 +25,7 @@ public static class DependencyInjection
 
         #region Services
 
+        services.AddScoped<ITokenService, TokenService>();
         services.AddScoped<IClienteService, ClienteService>();
         services.AddScoped<IContratoService, ContratoService>();
         services.AddScoped<IDebtCalculationService, DebtCalculationService>();
@@ -38,11 +39,9 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddInfrastructureJWT(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructureJWT(this IServiceCollection services)
     {
-        var jwtKey = configuration["Jwt:Key"] ?? "+WsLhdwMcCnW&cJW4a5hm^jFemE&?V?Y?z9eMdcN_X3DktLE7W9nS#Z2&vpakM6v";
-        var key = Encoding.ASCII.GetBytes(jwtKey);
-
+        var key = Encoding.ASCII.GetBytes("+WsLhdwMcCnW&cJW4a5hm^jFemE&?V?Y?z9eMdcN_X3DktLE7W9nS#Z2&vpakM6v");
         services.AddAuthentication(x =>
         {
             x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;

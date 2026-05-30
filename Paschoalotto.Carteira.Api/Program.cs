@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
 builder.Services
     .AddInfrastructureApi(builder.Configuration)
-    .AddInfrastructureJWT(builder.Configuration)
+    .AddInfrastructureJWT()
     .AddInfrastructureSwagger()
     .AddInfrastructureCORS(builder.Configuration);
 
@@ -38,13 +38,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
-
-var corsPolicy = builder.Configuration["Cors:PolicyName"] ?? "PaschoalottoCarteira";
-app.UseCors(corsPolicy);
-
-app.UseAuthentication();
+app.UseCors(builder.Configuration.GetSection("Cors:PolicyName").Value!);
 app.UseAuthorization();
-
 app.MapControllers();
 
 await app.RunAsync();

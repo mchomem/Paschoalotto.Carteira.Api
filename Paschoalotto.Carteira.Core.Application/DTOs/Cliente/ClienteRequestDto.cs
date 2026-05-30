@@ -1,6 +1,4 @@
-﻿using Paschoalotto.Carteira.Core.Domain.Enums;
-
-namespace Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
+﻿namespace Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
 
 public class ClienteRequestDto
 {

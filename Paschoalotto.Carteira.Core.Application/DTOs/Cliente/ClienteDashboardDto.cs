@@ -1,9 +1,4 @@
-using Paschoalotto.Carteira.Core.Application.DTOs.Acordo;
-using Paschoalotto.Carteira.Core.Application.DTOs.Boleto;
-using Paschoalotto.Carteira.Core.Application.DTOs.Contrato;
-using Paschoalotto.Carteira.Core.Application.DTOs.ParcelaAcordo;
-
-namespace Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
+﻿namespace Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
 
 public class ClienteDashboardDto
 {

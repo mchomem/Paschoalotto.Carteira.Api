@@ -1,5 +1,7 @@
 ﻿global using Mapster;
+global using Microsoft.IdentityModel.Tokens;
 global using Paschoalotto.Carteira.Core.Application.DTOs.Acordo;
+global using Paschoalotto.Carteira.Core.Application.DTOs.Auth;
 global using Paschoalotto.Carteira.Core.Application.DTOs.Boleto;
 global using Paschoalotto.Carteira.Core.Application.DTOs.Calculo;
 global using Paschoalotto.Carteira.Core.Application.DTOs.Cliente;
@@ -18,3 +20,6 @@ global using QuestPDF.Fluent;
 global using QuestPDF.Helpers;
 global using QuestPDF.Infrastructure;
 global using SkiaSharp;
+global using System.IdentityModel.Tokens.Jwt;
+global using System.Security.Claims;
+global using System.Text;
